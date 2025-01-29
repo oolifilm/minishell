@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student42.fr>           +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/01/28 14:26:20 by jbanchon         ###   ########.fr       */
+/*   Created: 2024/04/17 16:53:27 by julien            #+#    #+#             */
+/*   Updated: 2024/05/23 16:40:35 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-#include "../libft/libft.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-
-#endif
+int	ft_isalpha(int character)
+{
+	if ((character >= 'A' && character <= 'Z') || (character >= 'a'
+			&& character <= 'z'))
+		return (1);
+	return (0);
+}

@@ -3,20 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+         #
+#    By: jbanchon <jbanchon@student42.fr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:08:51 by leaugust          #+#    #+#              #
-#    Updated: 2025/01/22 14:09:46 by leaugust         ###   ########.fr        #
+#    Updated: 2025/01/28 13:51:06 by jbanchon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror 
 
-SRC			=	
+SRC			=	minishell/main.c
 
 OBJ			=	$(SRC:.c=.o)
+LIBFTDIR 	=	libft
 
 ROSE		=	\033[1;38;5;206m
 LILA		=	\033[1;38;5;177m
