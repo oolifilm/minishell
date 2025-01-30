@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:11 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/01/29 18:28:17 by julien           ###   ########.fr       */
+/*   Updated: 2025/01/30 11:52:41 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,10 @@ Utilisation : exit [status]
 
 int ft_exit(char **argv)
 {
-    
+    int status;
+
+    (void)argv;
+    status = 0;
+    printf("exit from minishell: %d\n", status);
+    exit(status);
 }
