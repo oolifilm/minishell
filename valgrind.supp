@@ -1,0 +1,10 @@
+{
+   ignore_readline_memory_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:readline
+   fun:add_history
+   fun:free_history_entry
+   ...
+}

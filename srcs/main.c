@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/02/10 16:23:18 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:06:06 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,17 @@ int	main(void)
 		prompt = "\033[1;38;5;206mminishell$>\033[0m ";
 		input = readline(prompt);
         if (input == NULL)
+		{
+			free(input);
             break;
-        if (*input)
+		}
+		if (*input)
             add_history(input);
         printf("You entered: %s\n", input);
-		exec_command(cmd, args);
+		if (ft_strcmp(input, "exit") == 0)
+			break;
+		if (ft_strcmp(input, "ls") == 0)
+			exec_command(cmd, args);
         free(input);
 	}
 	return (0);
