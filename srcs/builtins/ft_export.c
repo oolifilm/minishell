@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:14 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/01/30 12:44:30 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:51:21 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 Ce qui nous est démandé dans le sujet: export with no options
 =================================================================================
 Commande export : ajouter ou modifier une variable d'environnement
+Utilisation : export [variable]
+=================================================================================
+add_env = fonction pour ajouter une variable d'environnement
+Peut etre free a la fin ?
 */
 
 int	ft_export(char **argv)
