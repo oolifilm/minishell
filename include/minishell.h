@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/02/11 11:06:34 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:59:51 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,12 @@
 
 typedef enum e_token_type
 {
-	COMMAND,
-	ARGUMENT,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+	REDIRECTION,
+	DOUBLE_REDIRECTION,
 	PIPE,
-	REDIRECT,
-	DOUBLE_REDIRECT,
-	AND,
-	OR,
-	COMMENT,
+	DOLAR,
 }					t_token_type;
 
 typedef struct s_token
