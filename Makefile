@@ -6,7 +6,7 @@
 #    By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:08:51 by leaugust          #+#    #+#              #
-#    Updated: 2025/02/10 16:37:29 by jbanchon         ###   ########.fr        #
+#    Updated: 2025/02/11 15:24:54 by jbanchon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS		=	-Wall -Wextra -Werror
 LIBFTDIR 	=	libft
 LDFLAGS 	=	-lreadline -L$(LIBFTDIR) -lft
 
-SRC			=	srcs/main.c srcs/parsing/exec_cmd.c
+SRC			=	srcs/main.c srcs/parsing/exec_cmd.c srcs/parsing/tokenisation.c
 OBJ 		= 	$(SRC:.c=.o)
 
 LIBFTDIR 	=	libft
