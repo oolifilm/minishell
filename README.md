@@ -1,2 +1,2 @@
 # minishell
-This project is about creating a simple shell.
+On est tellement cooked 
