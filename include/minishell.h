@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/02/10 16:19:02 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/02/11 11:06:34 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,35 @@
 # include "builtins.h"
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <sys/wait.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <sys/wait.h>
 # include <unistd.h>
+
+typedef enum e_token_type
+{
+	COMMAND,
+	ARGUMENT,
+	PIPE,
+	REDIRECT,
+	DOUBLE_REDIRECT,
+	AND,
+	OR,
+	COMMENT,
+}					t_token_type;
+
+typedef struct s_token
+{
+	char			*value;
+	struct s_token	type;
+	struct s_token	*next;
+}					t_token;
 
 /*=======================================PARSING==========================================*/
 
-void	exec_command(char *cmd, char **argv);
-char	*get_path(char *cmd);
-void	ft_free_split(char **tab);
-
-
-
+void				exec_command(char *cmd, char **argv);
+char				*get_path(char *cmd);
+void				ft_free_split(char **tab);
 
 #endif
