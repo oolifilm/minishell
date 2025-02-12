@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/02/11 15:33:08 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/02/12 10:30:37 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(void)
 		t_token *tokens = tokenize_input(input);
 		while(tokens)
 		{
-			printf("Type: %d\n, Value: %s\n", tokens->type, tokens->value);
+			printf("Type: %d\n, Value: %s\n", tokens->type, tokens->input);
 			tokens = tokens->next;
 		}
 		if (ft_strcmp(input, "exit") == 0)

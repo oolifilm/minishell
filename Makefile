@@ -6,7 +6,7 @@
 #    By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:08:51 by leaugust          #+#    #+#              #
-#    Updated: 2025/02/11 15:24:54 by jbanchon         ###   ########.fr        #
+#    Updated: 2025/02/12 10:28:49 by jbanchon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ all: $(NAME)
 
 $(LIBFT):
 	@echo "$(LILA)COMPILATION DE LA LIBFT$(NC)"
-	@make -C $(LIBFTDIR)
+	@make -C $(LIBFTDIR) --silent
 	@echo "$(ROSE)LIBFT CRÉÉ$(NC)"
 
 $(NAME): $(LIBFT) $(OBJ)
@@ -49,7 +49,7 @@ clean:
 fclean: clean
 	@echo "$(LILA)SUPPRESSION DE L'EXÉCUTABLE DE MINISHELL$(NC)"
 	@rm -f $(NAME)
-	@make -C $(LIBFTDIR) fclean
+	@make -C $(LIBFTDIR) fclean --silent
 	@echo "$(ROSE)DONE$(NC)"
 
 re: fclean all

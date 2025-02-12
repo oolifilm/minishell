@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/02/11 15:57:28 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:41:04 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ On va copier la valeur de l'element dans le token.
 On va assigner le type de l'element dans le token.
 */
 
-t_token	*new_token(char *value, t_token_type type)
+t_token	*new_token(char *input, t_token_type type)
 {
 	t_token	*token;
 
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	token->value = ft_strdup(value);
-	if (token->value == NULL)
+	token->input = ft_strdup(input);
+	if (token->input == NULL)
 	{
 		free(token);
 		return (NULL);
@@ -40,204 +40,156 @@ t_token	*new_token(char *value, t_token_type type)
 	return (token);
 }
 
-t_token	*add_token(t_token **head, t_token **current, char *value,
+/*
+t_token			**head = pointeur de la tete de la liste chainee.
+t_token			**cur = pointeur de la fin de la liste chainee.
+char			*input = valeur de l'element.
+t_token_type	type = type de l'element.
+==================================================================================================
+Fonction qui ajoute un token a la liste chainee.
+On va creer un nouveau token.
+Si la liste chainee est vide,
+	on va assigner le nouveau token a la tete de la liste.
+Sinon, on va assigner le nouveau token a la fin de la liste.
+*/
+
+t_token	*add_token(t_token **head, t_token **cur, char *input,
 		t_token_type type)
 {
 	t_token	*new;
 
-	new = new_token(value, type);
+	new = new_token(input, type);
 	if (!new)
 		return (NULL);
 	if (!*head)
 	{
 		*head = new;
-		*current = new;
+		*cur = new;
 	}
 	else
 	{
-		(*current)->next = new;
-		*current = new;
+		(*cur)->next = new;
+		*cur = new;
 	}
 	return (new);
 }
 
-t_token	*assign_quote(char *input)
-{
-	int		i;
-	t_token	*head;
-	t_token	*current;
-	char	temp[2] = {0};
+/*
 
-	head = NULL;
-	current = NULL;
-	i = 0;
-	while (input[i])
+Fonction qui va assigner les quotes.
+On va verifier si on a une quote.
+Si on a une quote, on va creer un nouveau token.
+On va verifier si on a une double quote.
+Si on a une double quote, on va creer un nouveau token.
+*/
+
+void assign_quote(char input, t_token **head, t_token **cur)
+{
+	char	temp[2] = {input, '\0'};
+
+	if (input == '\'')
 	{
-		if (input[i] == '\'')
-			add_token(&head, &current, temp, SINGLE_QUOTE);
-		if (input[i] == '\"')
-			add_token(&head, &current, temp, DOUBLE_QUOTE);
-		i++;
+		add_token(head, cur, temp, SINGLE_QUOTE);
 	}
-	return (head);
+	else if (input == '\"')
+	{
+		add_token(head, cur, temp, DOUBLE_QUOTE);
+	}
 }
 
-t_token	*assign_redirection(char *input)
-{
-	int		i;
-	t_token	*head;
-	t_token	*current;
-	char	temp[2] = {0};
+/*
+Pointeur de i pour manipuler la variable i dans la fonction.
+On evite de renvoyer des valeurs pour i,
+	sinon on devrait renvoyer i a chaque fois qu'on modifie i.
+==================================================================================================
+Fonction qui va assigner les operateurs de redirection.
+On va verifier si on a un operateur de redirection.
+Si on a un operateur de redirection, on va creer un nouveau token.
+On va verifier si on a un double operateur de redirection.
+Si on a un double operateur de redirection, on va creer un nouveau token.
+*/
 
-	i = 0;
-	head = NULL;
-	current = NULL;
-	while (input[i])
+void assign_redirection(char *input, int *i, t_token **head, t_token **cur)
+{
+	char	temp[3] = {0};
+
+	if (input[*i] == '>' || input[*i] == '<')
 	{
-		if (input[i] == '>' || input[i] == '<')
+		if (input[*i + 1] == input[*i])
 		{
-			if (input[i + 1] == input[i])
-			{
-				temp[0] = input[i];
-				temp[1] = input[i + 1];
-				add_token(&head, &current, temp, DOUBLE_REDIRECTION);
-				i++;
-			}
-			else
-			{
-				temp[0] = input[i];
-				add_token(&head, &current, temp, REDIRECTION);
-			}
+			temp[0] = input[*i];
+			temp[1] = input[*i + 1];
+			add_token(head, cur, temp, DOUBLE_REDIRECTION);
+			(*i)++;
 		}
-		i++;
+		else
+		{
+			temp[0] = input[*i];
+			add_token(head, cur, temp, REDIRECTION);
+		}
 	}
-	return (head);
 }
 
-t_token	*assign_pipe(char *input)
+void assign_pipe(char input, t_token **head, t_token **cur)
 {
-	int		i;
-	char	temp[2] = {0};
-	t_token	*head;
-	t_token	*current;
-
-	i = 0;
-	head = NULL;
-	current = NULL;
-	while (input[i])
+	if (input == '|')
 	{
-		if (input[i] == '|')
-		{
-			temp[0] = input[i];
-			add_token(&head, &current, temp, PIPE);
-		}
-		i++;
+		add_token(head, cur, "|", PIPE);
 	}
-	return (head);
 }
 
-t_token	*assign_dollar(char *input)
+void assign_dollar(char input, t_token **head, t_token **cur)
 {
-	int		i;
-	char	temp[2] = {0};
-	t_token	*head;
-	t_token	*current;
-
-	i = 0;
-	head = NULL;
-	current = NULL;
-	while (input[i])
+	if (input == '$')
 	{
-		if (input[i] == '$')
-		{
-			temp[0] = input[i];
-			add_token(&head, &current, temp, DOLAR);
-		}
-		i++;
+		add_token(head, cur, "$", DOLLAR);
 	}
-	return (head);
+	
 }
 
 t_token	*tokenize_input(char *input)
 {
+	int		i;
 	t_token	*head;
-	t_token	*current;
-	t_token	*temp;
+	t_token	*cur;
 
+	i = 0;
 	head = NULL;
-	current = NULL;
-	temp = assign_quote(input);
-	while (temp)
+	cur = NULL;
+	while (input[i])
 	{
-		add_token(&head, &current, temp->value, temp->type);
-		temp = temp->next;
-	}
-	temp = assign_redirection(input);
-	while (temp)
-	{
-		add_token(&head, &current, temp->value, temp->type);
-		temp = temp->next;
-	}
-	temp = assign_pipe(input);
-	while (temp)
-	{
-		add_token(&head, &current, temp->value, temp->type);
-		temp = temp->next;
-	}
-	temp = assign_dollar(input);
-	while (temp)
-	{
-		add_token(&head, &current, temp->value, temp->type);
-		temp = temp->next;
-	}
-	temp = token_is_command(input);
-	while (temp)
-	{
-		add_token(&head, &current, temp->value, temp->type);
-		temp = temp->next;
+		assign_dollar(input[i], &head, &cur);
+		assign_pipe(input[i], &head, &cur);
+		assign_redirection(input, &i, &head, &cur);
+		assign_quote(input[i], &head, &cur);
+		if (input[i] != ' ' && input[i] != '\t' && input[i] != '\n')
+			token_is_command(input, &i, &head, &cur);
+		i++;
 	}
 	return (head);
 }
 
-t_token	*token_is_command(char *input)
+void token_is_command(char *input, int *i, t_token **head, t_token **cur)
 {
-	t_token	*current;
-	int		i;
-	int		j;
 	char	temp[256];
-	t_token	*head;
-	int		is_command;
+	int		j;
 
-	i = 0;
 	j = 0;
-	is_command = 1;
-	head = NULL;
-	current = NULL;
-	while (input[i])
+	while (input[*i] && input[*i] != ' ' && input[*i] != '\t'
+		&& input[*i] != '\n' && input[*i] != '|' && input[*i] != '$'
+		&& input[*i] != '>' && input[*i] != '<' && input[*i] != '\''
+		&& input[*i] != '\"')
 	{
-		if (input[i] != ' ' && input[i] != '\t' && input[i] != '\n')
-			temp[j++] = input[i];
-		else if (j > 0)
-		{
-			temp[j] = '\0';
-			if (is_command)
-			{
-				add_token(&head, &current, temp, COMMAND);
-				is_command = 0;
-			}
-            else
-                add_token(&head, &current, temp, ARGUMENT);
-            j = 0;
-		}
-		i++;
+		temp[j] = input[*i];
+		(*i)++;
+		j++;
 	}
+	temp[j] = '\0';
 	if (j > 0)
 	{
-		temp[j] = '\0';
-        if (is_command)
-            add_token(&head, &current, temp, COMMAND);
-        else
-            add_token(&head, &current, temp, ARGUMENT);
+		if (temp[0] == '-')
+			add_token(head, cur, temp, ARGUMENT);
+		else
+			add_token(head, cur, temp, COMMAND);
 	}
-	return (head);
 }
