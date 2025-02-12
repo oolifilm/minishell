@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:09 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/01/29 18:46:31 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/12 14:44:02 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ Utilisation : env
 envp = tableau qui contient toutes les variables d'environnement
 */
 
-int ft_env(char **envp)
+int	ft_env(char **envp)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (envp[i])
-    {
-        printf("%s\n", envp[i]);
-        i++;
-    }
-    return (0);
+	i = 0;
+	while (envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+	return (0);
 }

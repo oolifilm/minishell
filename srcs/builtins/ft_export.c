@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:14 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/01/30 12:51:21 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:44:06 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	ft_export(char **argv)
 		printf("export: not enough arguments\n");
 		return (1);
 	}
-    if (add_env(argv[1]) == 1)
-        return (1);
-    return (0);
+	if (add_env(argv[1]) == 1)
+		return (1);
+	return (0);
 }
 
 int	add_env(char *var)

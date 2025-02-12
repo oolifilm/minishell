@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:31:08 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/02/10 16:10:47 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:43:45 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ Fonction qui va chercher le PATH de la commande. Elle prend en parametre le nom 
 On va utiliser la fonction getenv pour recuperer le PATH.
 On split le PATH pour recuperer chaque chemin et verifier si la commande existe dans un de ces repertoires.
 On va parcourir le PATH pour chercher le chemin de la commande.
-Fonction access(void) avec F_OK permet de verifier si le chemin existe.
+Fonction	access(void) avec F_OK permet de verifier si le chemin existe.
 */
 
 char	*get_path(char *cmd)
@@ -73,24 +73,24 @@ char	*get_path(char *cmd)
 		path_cmd = ft_strjoin(path_split[i], "/");
 		path_cmd = ft_strjoin(path_cmd, cmd);
 		if (access(path_cmd, F_OK) == 0)
-            return (ft_free_split(path_split), path_cmd);
+			return (ft_free_split(path_split), path_cmd);
 		free(path_cmd);
 		i++;
 	}
 	return (ft_free_split(path_split), NULL);
 }
 
-void    ft_free_split(char **tab)
+void	ft_free_split(char **tab)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (!tab)
-        return ;
-    while (tab[i])
-    {
-        free(tab[i]);
-        i++;
-    }
-    free(tab);
+	i = 0;
+	if (!tab)
+		return ;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }

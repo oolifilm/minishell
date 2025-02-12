@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+         #
+#    By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:08:51 by leaugust          #+#    #+#              #
-#    Updated: 2025/02/12 10:28:49 by jbanchon         ###   ########.fr        #
+#    Updated: 2025/02/12 15:11:53 by leaugust         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror 
+CFLAGS		=	-Wall -Wextra -Werror -g3
 LIBFTDIR 	=	libft
 LDFLAGS 	=	-lreadline -L$(LIBFTDIR) -lft
 
