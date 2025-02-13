@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:15 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/02/12 14:44:09 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:00:49 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ strerror = fonction pour retourner une string d'erreur spécifique à la fonctio
 
 int	ft_pwd(void)
 {
-	if (getcwd(g_env->pwd, 1024) == NULL)
-	{
-		printf("pwd: %s\n", strerror(errno));
-		return (1);
-	}
-	return (0);
+    if (getcwd(g_env->pwd, 1024) == NULL)
+    {
+        printf("pwd: %s\n", strerror(errno));
+        return (1);
+    }
+    return (0);
 }

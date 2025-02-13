@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/02/12 14:43:54 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:06:29 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ strerror = fonction pour retourner une string d'erreur spécifique à la fonctio
 
 int	ft_cd(char **argv)
 {
-	char	*path;
+    char *path;
 
-	if (!argv[1])
-	{
-		printf("cd: path required\n");
-		return (1);
-	}
-	path = argv[1];
-	if (chdir(path) == -1)
-	{
-		printf("cd: %s: %s\n", path, strerror(errno));
-		return (1);
-	}
-	return (0);
+    if(!argv[1])
+    {
+        printf("cd: path required\n");
+        return (1);
+    }
+    path = argv[1];
+    if(chdir(path) == -1)
+    {
+        printf("cd: %s: %s\n", path, strerror(errno));
+        return (1);
+    }
+    return (0);
 }
