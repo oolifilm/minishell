@@ -1,0 +1,26 @@
+Gestion des quotes :
+Simple quote (') : ✅ Déjà implémenté
+Double quote (") avec expansion de $ : ❌ À améliorer
+Pas besoin de gérer les quotes imbriquées
+
+
+Variables d'environnement :
+Expansion basique ($VAR) : ✅ Déjà implémenté
+Expansion dans les doubles quotes : ❌ À implémenter
+$? (status de sortie) : ✅ Déjà implémenté
+Pas besoin de gérer $1, $@, etc.
+
+
+Gestion des opérateurs :
+Pipe (|) : ✅ Déjà implémenté
+Redirections (<, >) : ✅ Déjà implémenté
+Double redirections (<<, >>) : ✅ Déjà implémenté
+Heredoc (<<) : ❌ À implémenter
+
+
+Ce qui n'est PAS à gérer :
+Backslash ()
+Point-virgule (;)
+Quotes non fermées
+Les wildcards (* sauf en bonus)
+Les opérateurs && et || (sauf en bonus)

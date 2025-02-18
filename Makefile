@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+         #
+#    By: julien <julien@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:08:51 by leaugust          #+#    #+#              #
-#    Updated: 2025/02/12 10:28:49 by jbanchon         ###   ########.fr        #
+#    Updated: 2025/02/18 11:03:31 by julien           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,15 @@ CFLAGS		=	-Wall -Wextra -Werror
 LIBFTDIR 	=	libft
 LDFLAGS 	=	-lreadline -L$(LIBFTDIR) -lft
 
-SRC			=	srcs/main.c srcs/parsing/exec_cmd.c srcs/parsing/tokenisation.c
+SRC			=	srcs/main.c \
+				srcs/parsing/executor/exec_cmd.c \
+				srcs/parsing/tokenizer/tokenizer.c \
+				srcs/parsing/tokenizer/token_utils.c \
+				srcs/parsing/tokenizer/token_operators.c \
+				srcs/parsing/tokenizer/token_quotes.c \
+				srcs/parsing/tokenizer/token_command.c \
+				srcs/parsing/parser/parsing_utils.c
+
 OBJ 		= 	$(SRC:.c=.o)
 
 LIBFTDIR 	=	libft

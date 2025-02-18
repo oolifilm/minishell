@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:31:08 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/02/10 16:10:47 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:04:05 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
 /*
 Fonction qui execute une commande. Elle prend en parametre le nom de la commande.

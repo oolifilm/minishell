@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/02/13 14:34:32 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:22:15 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,8 @@ void				handle_quoted_content(char *input, int *i, t_token **head,
 						t_token **cur, char quote_type);
 void				assign_env_var(char *input, int *i, t_token **head,
 						t_token **cur);
+
+void	skip_spaces(char *input, int *i);
+
 
 #endif
