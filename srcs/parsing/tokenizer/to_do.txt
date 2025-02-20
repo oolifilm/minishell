@@ -1,12 +1,12 @@
 Gestion des quotes :
 Simple quote (') : ✅ Déjà implémenté
-Double quote (") avec expansion de $ : ❌ À améliorer
+Double quote (") avec expansion de $ : ✅ Déjà implémenté
 Pas besoin de gérer les quotes imbriquées
 
 
 Variables d'environnement :
 Expansion basique ($VAR) : ✅ Déjà implémenté
-Expansion dans les doubles quotes : ❌ À implémenter
+Expansion dans les doubles quotes : ✅ Déjà implémenté
 $? (status de sortie) : ✅ Déjà implémenté
 Pas besoin de gérer $1, $@, etc.
 
