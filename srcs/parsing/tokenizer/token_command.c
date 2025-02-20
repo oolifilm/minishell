@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:02:26 by julien            #+#    #+#             */
-/*   Updated: 2025/02/20 12:43:02 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:31:11 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	token_is_command(char *input, int *i, t_token **head, t_token **cur,
 			add_token(head, cur, temp, ARGUMENT);
 		else
 			add_token(head, cur, temp, STRING);
-		skip_spaces(input, i);
+		//skip_spaces(input, i);
 	}
 }
 
