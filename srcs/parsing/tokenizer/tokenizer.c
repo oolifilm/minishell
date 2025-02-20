@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/02/18 11:04:37 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/20 14:06:06 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ t_token	*tokenize_input(char *input)
 	t_token	*head;
 	t_token	*cur;
 	int		is_first_word;
+	size_t len;
 
+	len = ft_strlen(input);
 	i = 0;
 	is_first_word = 1;
 	head = NULL;
 	cur = NULL;
 	skip_spaces(input, &i);
-	while (input[i])
+	while (i < (int)len)
 	{
 		assign_dollar(input[i], &head, &cur);
 		assign_pipe(input[i], &head, &cur);
@@ -35,5 +37,7 @@ t_token	*tokenize_input(char *input)
 			handle_quoted_content(input, &i, &head, &cur, input[i]);
 		i++;
 	}
+	if (!head)
+		printf(YELLOW "[WARNING] No tokens were created!\n" RESET);
 	return (head);
 }

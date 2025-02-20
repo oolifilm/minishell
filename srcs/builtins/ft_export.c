@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:14 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/01/30 12:51:21 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:34:52 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	add_env(char *var)
 		perror("malloc");
 		return (1);
 	}
+	printf("Memory allocated for new_env\n");
 	i = 0;
 	while (i < env_count)
 	{
