@@ -6,7 +6,7 @@
 #    By: julien <julien@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:08:51 by leaugust          #+#    #+#              #
-#    Updated: 2025/02/18 11:03:31 by julien           ###   ########.fr        #
+#    Updated: 2025/02/19 10:17:21 by julien           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC			=	srcs/main.c \
 				srcs/parsing/tokenizer/token_operators.c \
 				srcs/parsing/tokenizer/token_quotes.c \
 				srcs/parsing/tokenizer/token_command.c \
+				srcs/parsing/tokenizer/double_quoted.c \
 				srcs/parsing/parser/parsing_utils.c
 
 OBJ 		= 	$(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:39:41 by julien            #+#    #+#             */
-/*   Updated: 2025/02/18 11:04:20 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/18 20:33:02 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int get_env_var_name(char *input, int j, char *var_name)
     j++;
     while(input[j] && (ft_isalnum(input[j]) || input[j] == '_'))
     {
-        var_name[var_len++] = input[j];
+        var_name[var_len] = input[j];
         var_len++;
         j++;
     }    
@@ -97,5 +97,15 @@ static char *handle_double_quoted(char *input, int *i)
     if (!result)
         return (NULL);
     fill_quoted_content(input, result, i);
+    return (result);
+}
+
+char *expand_var_in_dquotes(char *str)
+{
+    char *result;
+    int i;
+    
+    i = 0;
+    result = handle_double_quoted(str, &i);
     return (result);
 }

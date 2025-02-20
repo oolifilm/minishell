@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/02/18 10:22:15 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/18 20:54:15 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include "../srcs/parsing/parser.h"
 # include "builtins.h"
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -23,27 +24,6 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef enum e_token_type
-{
-	COMMAND,            /*0*/
-	ARGUMENT,           /*1*/
-	SINGLE_QUOTE,       /*2*/
-	DOUBLE_QUOTE,       /*3*/
-	REDIRECTION,        /*4*/
-	DOUBLE_REDIRECTION, /*5*/
-	PIPE,               /*6*/
-	DOLLAR,             /*7*/
-	EXIT_STATUS,        /*8*/
-	ENV_VAR,            /*9*/
-	STRING,             /*10*/
-}					t_token_type;
-
-typedef struct s_token
-{
-	char			*input;
-	t_token_type	type;
-	struct s_token	*next;
-}					t_token;
 
 /*=======================================PARSING==========================================*/
 

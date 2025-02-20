@@ -6,22 +6,22 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:59:25 by julien            #+#    #+#             */
-/*   Updated: 2025/02/18 11:04:27 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/19 12:31:19 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
 /*
-Pointeur de i pour manipuler la variable i dans la fonction.
-On evite de renvoyer des valeurs pour i,
-	sinon on devrait renvoyer i a chaque fois qu'on modifie i.
-==================================================================================================
-Fonction qui va assigner les operateurs de redirection.
-On va verifier si on a un operateur de redirection.
-Si on a un operateur de redirection, on va creer un nouveau token.
-On va verifier si on a un double operateur de redirection.
-Si on a un double operateur de redirection, on va creer un nouveau token.
+Note sur le pointeur i :
+1. Utilisation d'un pointeur pour modifier i directement dans la fonction
+2. Évite de retourner la nouvelle valeur de i
+3. Simplifie la gestion des positions dans le parsing
+==Fonction qui va assigner les opérateurs de redirection==
+1. Détecte la présence d'un opérateur de redirection (< ou >)
+2. Crée un token pour l'opérateur simple s'il est trouvé
+3. Vérifie si l'opérateur est double (<< ou >>)
+4. Crée un token spécifique pour l'opérateur double
 */
 
 void	assign_redirection(char *input, int *i, t_token **head, t_token **cur)
@@ -49,16 +49,12 @@ void	assign_redirection(char *input, int *i, t_token **head, t_token **cur)
 void	assign_pipe(char input, t_token **head, t_token **cur)
 {
 	if (input == '|')
-	{
 		add_token(head, cur, "|", PIPE);
-	}
 }
 
 void	assign_dollar(char input, t_token **head, t_token **cur)
 {
 	if (input == '$')
-	{
 		add_token(head, cur, "$", DOLLAR);
-	}
 }
 

@@ -6,14 +6,14 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:54:35 by julien            #+#    #+#             */
-/*   Updated: 2025/02/18 10:55:24 by julien           ###   ########.fr       */
+/*   Updated: 2025/02/19 10:18:08 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 typedef enum e_token_type
 {
@@ -37,7 +37,6 @@ typedef struct s_token
     struct s_token  *next;
 }   t_token;
 
-/* Tokenizer functions */
 t_token     *tokenize_input(char *input);
 void        token_is_command(char *input, int *i, t_token **head,
                 t_token **cur, int *is_first_word);
@@ -48,7 +47,8 @@ void        assign_redirection(char *input, int *i, t_token **head,
 void        assign_pipe(char input, t_token **head, t_token **cur);
 void        skip_spaces(char *input, int *i);
 
-/* Double quote handling */
-char        *handle_double_quoted(char *input, int *i);
+char        *expand_var_in_dquotes(char *str);
+void        handle_quoted_content(char *input, int *i, t_token **head,
+                t_token **cur, char quote_type);
 
 #endif
