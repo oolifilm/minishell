@@ -1,26 +1,37 @@
-Gestion des quotes :
-Simple quote (') : ✅ Déjà implémenté
-Double quote (") avec expansion de $ : ✅ Déjà implémenté
-Pas besoin de gérer les quotes imbriquées
+✅ Déjà implémenté :
 
+Gestion des quotes
+Simple quote (')
+Double quote (") avec expansion de $
+Variables d'environnement
+Expansion basique ($VAR)
+Expansion dans les doubles quotes
+$? (status de sortie)
+Gestion des opérateurs
+Pipe (|)
+Redirections (<, >)
+Double redirections (>>)
 
-Variables d'environnement :
-Expansion basique ($VAR) : ✅ Déjà implémenté
-Expansion dans les doubles quotes : ✅ Déjà implémenté
-$? (status de sortie) : ✅ Déjà implémenté
-Pas besoin de gérer $1, $@, etc.
+❌ À implémenter :
 
+Heredoc (<<)
+Je vois que vous avez un fichier here_doc.c avec une fonction handle_heredoc vide
+Cette fonctionnalité doit être implémentée pour gérer la lecture interactive jusqu'à un délimiteur
+🚫 Ne pas implémenter (hors sujet) :
 
-Gestion des opérateurs :
-Pipe (|) : ✅ Déjà implémenté
-Redirections (<, >) : ✅ Déjà implémenté
-Double redirections (<<, >>) : ✅ Déjà implémenté
-Heredoc (<<) : ❌ À implémenter
-
-
-Ce qui n'est PAS à gérer :
 Backslash ()
 Point-virgule (;)
 Quotes non fermées
-Les wildcards (* sauf en bonus)
-Les opérateurs && et || (sauf en bonus)
+Wildcards (* - sauf en bonus)
+Opérateurs && et || (sauf en bonus)
+Variables spéciales ($1, $@, etc.)
+Quotes imbriquées
+
+Pour implémenter le heredoc (<<), vous devrez :
+
+Détecter la séquence "<<" dans le flux d'entrée
+Lire le délimiteur qui suit
+Créer un processus qui lit l'entrée standard ligne par ligne
+Comparer chaque ligne avec le délimiteur
+Stocker le contenu lu dans un fichier temporaire ou un buffer
+Gérer correctement la redirection de ce contenu vers la commande
