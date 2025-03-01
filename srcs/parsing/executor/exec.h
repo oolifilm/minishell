@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_operators.c                                  :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 10:59:25 by julien            #+#    #+#             */
-/*   Updated: 2025/02/28 23:13:47 by julien           ###   ########.fr       */
+/*   Created: 2025/03/01 10:15:49 by julien            #+#    #+#             */
+/*   Updated: 2025/03/01 10:40:47 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
+#ifndef EXEC_H
+# define EXEC_H
 
-void	assign_pipe(char input, t_token **head, t_token **cur)
-{
-	if (input == '|')
-		add_token(head, cur, "|", PIPE);
-}
+/*=======================================EXEC==========================================*/
 
-void	assign_dollar(char input, t_token **head, t_token **cur)
-{
-	if (input == '$')
-		add_token(head, cur, "$", DOLLAR);
-}
+void				exec_command(char *cmd, char **argv);
+char				*get_path(char *cmd);
+void                ft_free_split(char **split);
 
+/*=======================================REDIR EXEC==========================================*/
+
+int                  exec_redirection(t_token *token);
+
+
+#endif

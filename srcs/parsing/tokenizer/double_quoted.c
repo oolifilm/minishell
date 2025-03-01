@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   double_quoted.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:39:41 by julien            #+#    #+#             */
-/*   Updated: 2025/02/20 11:35:27 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/02/28 22:40:04 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void fill_quoted_content(char *input, char *result, int *i)
     char var_name[256];
     char *env_value;
 
-    j = *i + 1;
+    j = *i;  // i est déjà après la quote d'ouverture
     len = 0;
     while (input[j] && input[j] != '"')
     {
@@ -126,13 +126,12 @@ static char *handle_double_quoted(char *input, int *i)
     int j;
     int len;
 
-    j = *i + 1;
+    j = *i;
     len = cal_quoted_len(input, j);
     result = malloc(len + 1);
     if (!result)
         return (NULL);
-    printf("Memory allocated for result\n");
-    fill_quoted_content(input, result, i);
+    fill_quoted_content(input, result, &j);
     return (result);
 }
 

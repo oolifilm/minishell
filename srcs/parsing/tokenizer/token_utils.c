@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:57:49 by julien            #+#    #+#             */
-/*   Updated: 2025/02/20 14:29:11 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/01 10:01:16 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,35 @@ void free_tokens(t_token *tokens)
         free(tmp->input);
         free(tmp);
     }
+}
+
+char *get_token_type_str(t_token_type type)
+{
+	if (type == COMMAND)
+		return ("COMMAND");
+	else if (type == ARGUMENT)
+		return ("ARGUMENT");
+	else if (type == PIPE)
+		return ("PIPE");
+	else if (type == SINGLE_QUOTE)
+		return ("SINGLE_QUOTE");
+	else if (type == DOUBLE_QUOTE)
+		return ("DOUBLE_QUOTE");
+	else if (type == REDIR_INPUT)
+		return ("REDIR_INPUT");
+	else if (type == REDIR_OUTPUT)
+		return ("REDIR_OUTPUT");
+	else if (type == REDIR_APPEND)
+		return ("REDIR_APPEND");
+	else if (type == HEREDOC)
+		return ("HEREDOC");
+	else if (type == EXIT_STATUS)
+		return ("EXIT_STATUS");
+	else if (type == ENV_VAR)
+		return ("ENV_VAR");
+	else if (type == REDIR_FILE)
+		return ("REDIR_FILE");
+	else if (type == STRING)
+		return ("STRING");
+	return ("UNKNOWN");
 }

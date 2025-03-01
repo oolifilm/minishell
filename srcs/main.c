@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/02/20 14:02:12 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/01 09:58:39 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	main(void)
 			printf(RED "[DEBUG] EOF detected, exiting...\n" RESET);
 			exit(0);
 		}
-		
 		if (*input)
 		{
 			add_history(input);
@@ -50,14 +49,15 @@ int	main(void)
 		tmp = tokens;
 		while (tmp)
 		{
-			printf("Type: %d\n, Value: %s\n", tmp->type, tmp->input);
+			printf("Type: %s\n, Value: %s\n", get_token_type_str(tmp->type),
+				tmp->input);
 			tmp = tmp->next;
 		}
 		if (ft_strcmp(input, "exit") == 0)
 		{
 			free(input);
 			free_tokens(tokens);
-			rl_clear_history();
+			clear_history();
 			break ;
 		}
 		if (ft_strcmp(input, "ls") == 0)

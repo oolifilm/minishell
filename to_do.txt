@@ -1,0 +1,69 @@
+MINISHELL TODO LIST
+=================
+
+1. PARSING [Priorité: HAUTE]
+   ✅ Parsing des opérateurs de redirection (<, >, >>, <<)
+   ✅ Gestion des erreurs de syntaxe (>>>, <<<)
+   ☐ Parsing des pipes (|)
+   ✅ Expansion des variables ($VAR)
+   ☐ Gestion du $?
+   ☐ Tests exhaustifs du parsing
+
+2. EXÉCUTION BASIQUE [Priorité: HAUTE]
+   ✅ Recherche d'exécutables dans PATH
+   ✅ Implémentation fork() et execve()
+   ☐ Gestion des processus (wait)
+   ☐ Gestion des codes de retour ($?)
+
+3. BUILT-INS SIMPLES [Priorité: HAUTE]
+   ☐ echo (avec option -n)
+   ☐ pwd (sans options)
+   ☐ env (sans options/arguments)
+   ☐ exit (sans options)
+
+4. REDIRECTIONS [Priorité: MOYENNE]
+   ✅ Redirection entrée (<)
+   ✅ Redirection sortie (>)
+   ✅ Redirection sortie append (>>)
+   ✅ Structure de base pour heredoc (<<)
+   ☐ Implémentation complète du heredoc
+      - Lecture jusqu'au délimiteur
+      - Gestion des variables dans heredoc
+      - Stockage temporaire du contenu
+
+5. BUILT-INS AVANCÉS [Priorité: MOYENNE]
+   ☐ cd (chemins relatifs/absolus)
+   ☐ export (sans options)
+   ☐ unset (sans options)
+
+6. PIPES [Priorité: MOYENNE]
+   ✅ Parsing des pipes
+   ☐ Création des pipes
+   ☐ Redirection entrée/sortie entre processus
+   ☐ Gestion des processus multiples
+
+7. GESTION DES SIGNAUX [Priorité: BASSE]
+   ☐ ctrl-C (nouveau prompt)
+   ☐ ctrl-D (quitter)
+   ☐ ctrl-\ (rien faire)
+
+8. NETTOYAGE ET OPTIMISATION [Priorité: BASSE]
+   ☐ Gestion des fuites mémoire
+   ☐ Tests exhaustifs
+   ☐ Nettoyage du code
+   ☐ Documentation
+
+NOTES:
+- Les tâches sont organisées par dépendances (les premières sont nécessaires pour les suivantes)
+- Priorité HAUTE = Nécessaire pour les fonctionnalités de base
+- Priorité MOYENNE = Fonctionnalités importantes mais qui dépendent des bases
+- Priorité BASSE = Peut être fait en dernier
+
+PROGRESSION ACTUELLE : ~40%
+- ✅ Parsing basique des commandes
+- ✅ Gestion des quotes simples/doubles
+- ✅ Historique des commandes
+- ✅ Affichage du prompt
+- ✅ Parsing des redirections
+- ✅ Gestion des erreurs de syntaxe
+- ✅ Structure de base pour l'exécution

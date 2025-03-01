@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:54:35 by julien            #+#    #+#             */
-/*   Updated: 2025/02/20 12:20:58 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/01 10:15:38 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,16 @@ typedef enum e_token_type
 	ARGUMENT,           /*1*/
 	SINGLE_QUOTE,       /*2*/
 	DOUBLE_QUOTE,       /*3*/
-	REDIRECTION,        /*4*/
-	DOUBLE_REDIRECTION, /*5*/
-	PIPE,               /*6*/
-	DOLLAR,             /*7*/
-	EXIT_STATUS,        /*8*/
-	ENV_VAR,            /*9*/
-	STRING,             /*10*/
+	REDIR_INPUT,        /*4*/
+	REDIR_OUTPUT, 		/*5*/
+	REDIR_APPEND, 		/*6*/
+	HEREDOC, 			/*7*/
+	PIPE,               /*8*/
+	DOLLAR,             /*9*/
+	EXIT_STATUS,        /*10*/
+	ENV_VAR,            /*11*/
+	STRING,             /*12*/
+	REDIR_FILE,         /*13*/
 }					t_token_type;
 
 typedef struct s_token
@@ -58,5 +61,6 @@ void				handle_quoted_content(char *input, int *i, t_token **head,
 						t_token **cur, char quote_type);
 
 void				free_tokens(t_token *tokens);
+char 				*get_token_type_str(t_token_type type);
 
 #endif

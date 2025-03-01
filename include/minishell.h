@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/02/18 20:54:15 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/01 10:20:19 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include "../srcs/parsing/parser.h"
+# include "../srcs/parsing/executor/exec.h"
 # include "builtins.h"
 # include <readline/history.h>
 # include <readline/readline.h>

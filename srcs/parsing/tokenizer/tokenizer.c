@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/02/20 14:28:55 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:46:37 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ t_token	*tokenize_input(char *input)
 		assign_dollar(input[i], &head, &cur);
 		assign_pipe(input[i], &head, &cur);
 		assign_redirection(input, &i, &head, &cur);
-		assign_quote(input[i], &head, &cur);
-		token_is_command(input, &i, &head, &cur, &is_first_word);	
 		if (input[i] == '\'' || input[i] == '"')
 			handle_quoted_content(input, &i, &head, &cur, input[i]);
-		i++;
+		else
+		{
+			token_is_command(input, &i, &head, &cur, &is_first_word);
+			i++;
+		}
 	}
 	return (head);
 }
