@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 20:16:46 by julien            #+#    #+#             */
-/*   Updated: 2025/02/18 20:17:39 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/03 13:10:39 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-void    handle_heredoc(char *input, int *i, t_token **head, t_token **cur)
+void	handle_heredoc(char *input, int *i, t_token **head, t_token **cur)
 {
-    
 }

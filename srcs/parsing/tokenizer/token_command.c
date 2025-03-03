@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:02:26 by julien            #+#    #+#             */
-/*   Updated: 2025/02/20 14:31:11 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:48:00 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ Fonction pour traiter les commandes/arguments.
 4. Passe les espaces.
 */
 
-void	token_is_command(char *input, int *i, t_token **head, t_token **cur,
+void	token_is_command(char *input, int *i, t_token_list *tokens,
 		int *is_first_word)
 {
 	char	temp[256];
@@ -41,13 +41,13 @@ void	token_is_command(char *input, int *i, t_token **head, t_token **cur,
 	{
 		if (*is_first_word)
 		{
-			add_token(head, cur, temp, COMMAND);
+			add_token(tokens, temp, COMMAND);
 			*is_first_word = 0;
 		}
 		else if (temp[0] == '-')
-			add_token(head, cur, temp, ARGUMENT);
+			add_token(tokens, temp, ARGUMENT);
 		else
-			add_token(head, cur, temp, STRING);
+			add_token(tokens, temp, STRING);
 		//skip_spaces(input, i);
 	}
 }
@@ -59,7 +59,7 @@ Fonction pour traiter les variables d'environnement.
 3. Ajoute le token à la liste chainée.
 */
 
-void	assign_env_var(char *input, int *i, t_token **head, t_token **cur)
+void	assign_env_var(char *input, int *i, t_token_list *tokens)
 {
 	char	var_name[256];
 	int		j;
@@ -68,7 +68,7 @@ void	assign_env_var(char *input, int *i, t_token **head, t_token **cur)
 	(*i)++;
 	if (input[*i] == '?')
 	{
-		add_token(head, cur, "?", EXIT_STATUS);
+		add_token(tokens, "?", EXIT_STATUS);
 		(*i)++;
 		return ;
 	}
@@ -79,5 +79,5 @@ void	assign_env_var(char *input, int *i, t_token **head, t_token **cur)
 	}
 	var_name[j] = '\0';
 	if (j > 0)
-		add_token(head, cur, var_name, ENV_VAR);
+		add_token(tokens, var_name, ENV_VAR);
 }

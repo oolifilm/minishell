@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:57:49 by julien            #+#    #+#             */
-/*   Updated: 2025/03/01 10:01:16 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/03 14:59:36 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ t_token	*new_token(char *input, t_token_type type)
 }
 
 /*
-t_token			**head = pointeur de la tete de la liste chainee.
-t_token			**cur = pointeur de la fin de la liste chainee.
-char			*input = valeur de l'element.
+t_token		**head = pointeur de la tete de la liste chainee.
+t_token		**cur = pointeur de la fin de la liste chainee.
+char		*input = valeur de l'element.
 t_token_type	type = type de l'element.
-==================================================================================================
+=============================================================
 Fonction qui ajoute un token a la liste chainee.
 On va creer un nouveau token.
 Si la liste chainee est vide,
@@ -53,7 +53,7 @@ Si la liste chainee est vide,
 Sinon, on va assigner le nouveau token a la fin de la liste.
 */
 
-t_token	*add_token(t_token **head, t_token **cur, char *input,
+t_token	*add_token(t_token_list *tokens, char *input,
 		t_token_type type)
 {
 	t_token	*new;
@@ -61,15 +61,15 @@ t_token	*add_token(t_token **head, t_token **cur, char *input,
 	new = new_token(input, type);
 	if (!new)
 		return (NULL);
-	if (!*head)
+	if (!tokens->head)
 	{
-		*head = new;
-		*cur = new;
+		tokens->head = new;
+		tokens->cur = new;
 	}
 	else
 	{
-		(*cur)->next = new;
-		*cur = new;
+		tokens->cur->next = new;
+		tokens->cur = new;
 	}
 	return (new);
 }
@@ -84,23 +84,22 @@ void	skip_spaces(char *input, int *i)
 		(*i)++;
 }
 
-
-void free_tokens(t_token *tokens)
+void	free_tokens(t_token *tokens)
 {
-    t_token *tmp;
-    
-    if (!tokens)
-        return;
-    while (tokens)
-    {
+	t_token	*tmp;
+
+	if (!tokens)
+		return ;
+	while (tokens)
+	{
 		tmp = tokens;
-        tokens = tokens->next;
-        free(tmp->input);
-        free(tmp);
-    }
+		tokens = tokens->next;
+		free(tmp->input);
+		free(tmp);
+	}
 }
 
-char *get_token_type_str(t_token_type type)
+char	*get_token_type_str(t_token_type type)
 {
 	if (type == COMMAND)
 		return ("COMMAND");

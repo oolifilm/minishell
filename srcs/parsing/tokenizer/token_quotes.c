@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:00:31 by julien            #+#    #+#             */
-/*   Updated: 2025/02/28 22:39:17 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/03 14:44:25 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,25 @@ Fonction qui va traiter les quotes simples.
 4. Ajoute le résultat comme token de type STRING.
 */
 
-static void handle_single_quote(char *input, int *i, t_token **head, t_token **cur)
+static void	handle_single_quote(char *input, int *i, t_token_list *tokens)
 {
-    char *content;
-    int start;
+	char	*content;
+	int		start;
 
-    (*i)++;
-    start = *i;
-    while(input[*i] && input[*i] != '\'')
-        (*i)++;
-    if (input[*i] == '\'')
-    {
-        content = ft_substr(input, start, *i - start);
-        if (content)
-        {
-            add_token(head, cur, content, STRING);
-            free(content);
-        }
-        (*i)++;
-    }
+	(*i)++;
+	start = *i;
+	while (input[*i] && input[*i] != '\'')
+		(*i)++;
+	if (input[*i] == '\'')
+	{
+		content = ft_substr(input, start, *i - start);
+		if (content)
+		{
+			add_token(tokens, content, STRING);
+			free(content);
+		}
+		(*i)++;
+	}
 }
 
 /*
@@ -50,31 +50,31 @@ Fonction qui va traiter les quotes doubles.
 5. Ajoute le résultat comme token de type STRING.
 */
 
-static void handle_double_quotes(char *input, int *i, t_token **head, t_token **cur)
+static void	handle_double_quotes(char *input, int *i, t_token_list *tokens)
 {
-    char *content;
-    char *expanded;
-    int start;
+	char	*content;
+	char	*expanded;
+	int		start;
 
-    (*i)++;
-    start = *i;
-    while (input[*i] && input[*i] != '"')
-        (*i)++;
-    if (input[*i] == '"')
-    {
-        content = ft_substr(input, start, *i - start);
-        if (content)
-        {
-            expanded = expand_var_in_dquotes(content);
-            if (expanded)
-            {
-                add_token(head, cur, expanded, STRING);
-                free(expanded);
-            }
-            free(content);
-        }
-        (*i)++;
-    }
+	(*i)++;
+	start = *i;
+	while (input[*i] && input[*i] != '"')
+		(*i)++;
+	if (input[*i] == '"')
+	{
+		content = ft_substr(input, start, *i - start);
+		if (content)
+		{
+			expanded = expand_var_in_dquotes(content);
+			if (expanded)
+			{
+				add_token(tokens, expanded, STRING);
+				free(expanded);
+			}
+			free(content);
+		}
+		(*i)++;
+	}
 }
 
 /*
@@ -87,10 +87,10 @@ Fonction qui gère le contenu entre quotes (simples ou doubles).
 6. Ajoute le résultat comme token de type STRING
 */
 
-void handle_quoted_content(char *input, int *i, t_token **head, t_token **cur, char quote_type)
+void	handle_quoted_content(char *input, int *i, t_token_list *tokens, char quote_type)
 {
-    if (quote_type == '"')
-        handle_double_quotes(input, i, head, cur);
-    else
-        handle_single_quote(input, i, head, cur);
+	if (quote_type == '"')
+		handle_double_quotes(input, i, tokens);
+	else
+		handle_single_quote(input, i, tokens);
 }

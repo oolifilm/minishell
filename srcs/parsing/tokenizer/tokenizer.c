@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/02/28 11:46:37 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/03 14:59:10 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,29 @@
 t_token	*tokenize_input(char *input)
 {
 	int		i;
-	t_token	*head;
-	t_token	*cur;
+	t_token_list *tokens;
 	int		is_first_word;
-	size_t len;
+	size_t	len;
 
 	len = ft_strlen(input);
 	i = 0;
 	is_first_word = 1;
-	head = NULL;
-	cur = NULL;
-	skip_spaces(input, &i);	
+	tokens = malloc(sizeof(t_token_list));
+	tokens->head = NULL;
+	tokens->cur = NULL;
+	skip_spaces(input, &i);
 	while (i < (int)len)
 	{
-		assign_dollar(input[i], &head, &cur);
-		assign_pipe(input[i], &head, &cur);
-		assign_redirection(input, &i, &head, &cur);
+		assign_dollar(input[i], tokens);
+		assign_pipe(input[i], tokens);
+		assign_redirection(input, &i, tokens);
 		if (input[i] == '\'' || input[i] == '"')
-			handle_quoted_content(input, &i, &head, &cur, input[i]);
+			handle_quoted_content(input, &i, tokens, input[i]);
 		else
 		{
-			token_is_command(input, &i, &head, &cur, &is_first_word);
+			token_is_command(input, &i, tokens, &is_first_word);
 			i++;
 		}
 	}
-	return (head);
+	return (tokens->head);
 }
