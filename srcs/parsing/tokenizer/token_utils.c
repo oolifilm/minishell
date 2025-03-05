@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:57:49 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 13:05:21 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:08:33 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ t_token	*new_token(char *input, t_token_type type)
 }
 
 /*
-t_token		**head = pointeur de la tete de la liste chainee.
-t_token		**cur = pointeur de la fin de la liste chainee.
-char		*input = valeur de l'element.
+t_token			**head = pointeur de la tete de la liste chainee.
+t_token			**cur = pointeur de la fin de la liste chainee.
+char			*input = valeur de l'element.
 t_token_type	type = type de l'element.
 =============================================================
 Fonction qui ajoute un token a la liste chainee.
@@ -53,8 +53,7 @@ Si la liste chainee est vide,
 Sinon, on va assigner le nouveau token a la fin de la liste.
 */
 
-t_token	*add_token(t_token_list *tokens, char *input,
-		t_token_type type)
+t_token	*add_token(t_token_list *tokens, char *input, t_token_type type)
 {
 	t_token	*new;
 
@@ -87,7 +86,7 @@ void	skip_spaces(char *input, int *i)
 void	free_tokens(t_token_list *tokens_list)
 {
 	t_token	*tmp;
-	t_token *tokens;
+	t_token	*tokens;
 
 	if (!tokens_list)
 		return ;

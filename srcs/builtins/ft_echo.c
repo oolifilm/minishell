@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:14:58 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/01/29 17:58:06 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/05 14:57:11 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 Ce qui nous est démandé dans le sujet : echo with option -n
 =================================================================================
 Commande echo : Doit écrire les entrées sur la sortie standard et avec l'option
-Option -n : -n n'affiche pas la nouvelle ligne à la fin. Sinon affiche un retour à la ligne.
+Option -n :
+	-n n'affiche pas la nouvelle ligne à la fin. Sinon affiche un retour à la ligne.
 =================================================================================
 Utilisation UNIX de la commande echo : echo [OPTIONS] [TEXTE].
 */

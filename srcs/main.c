@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 14:49:33 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:23:06 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(void)
 			break ;
 		}
 		if (ft_strcmp(input, "ls") == 0)
-			exec_command(cmd, args);
+			exec_command("ls", args);
 		free(input);
 		free_tokens(tokens_list);
 	}

@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/05 13:58:12 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:08:21 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 t_token_list	*tokenize_input(char *input)
 {
-	int		i;
-	t_token_list *tokens;
-	int		is_first_word;
-	size_t	len;
+	int				i;
+	t_token_list	*tokens;
+	int				is_first_word;
+	size_t			len;
 
 	len = ft_strlen(input);
 	i = 0;

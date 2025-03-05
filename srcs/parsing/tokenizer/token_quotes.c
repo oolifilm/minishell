@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:00:31 by julien            #+#    #+#             */
-/*   Updated: 2025/03/03 14:44:25 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:08:10 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ Fonction qui gère le contenu entre quotes (simples ou doubles).
 6. Ajoute le résultat comme token de type STRING
 */
 
-void	handle_quoted_content(char *input, int *i, t_token_list *tokens, char quote_type)
+void	handle_quoted_content(char *input, int *i, t_token_list *tokens,
+		char quote_type)
 {
 	if (quote_type == '"')
 		handle_double_quotes(input, i, tokens);

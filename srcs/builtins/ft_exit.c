@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:11 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/01/30 11:52:41 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:01:43 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ Commande exit : quitter le shell
 Utilisation : exit [status]
 */
 
-int ft_exit(char **argv)
+int	ft_exit(char **argv)
 {
-    int status;
+	int	status;
 
-    (void)argv;
-    status = 0;
-    printf("exit from minishell: %d\n", status);
-    exit(status);
+	(void)argv;
+	status = 0;
+	printf("exit from minishell: %d\n", status);
+	exit(status);
 }
