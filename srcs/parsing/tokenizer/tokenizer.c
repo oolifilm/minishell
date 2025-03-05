@@ -6,13 +6,13 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/03 14:59:10 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:58:12 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-t_token	*tokenize_input(char *input)
+t_token_list	*tokenize_input(char *input)
 {
 	int		i;
 	t_token_list *tokens;
@@ -22,9 +22,7 @@ t_token	*tokenize_input(char *input)
 	len = ft_strlen(input);
 	i = 0;
 	is_first_word = 1;
-	tokens = malloc(sizeof(t_token_list));
-	tokens->head = NULL;
-	tokens->cur = NULL;
+	tokens = init_token_list();
 	skip_spaces(input, &i);
 	while (i < (int)len)
 	{
@@ -39,5 +37,5 @@ t_token	*tokenize_input(char *input)
 			i++;
 		}
 	}
-	return (tokens->head);
+	return (tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:54:35 by julien            #+#    #+#             */
-/*   Updated: 2025/03/03 14:47:12 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:58:22 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_token_list
 	t_token			*cur;
 }					t_token_list;
 
-t_token				*tokenize_input(char *input);
+t_token_list		*tokenize_input(char *input);
 void				assign_quote(char input, t_token_list *tokens);
 void				assign_env_var(char *input, int *i, t_token_list *tokens);
 void				assign_redirection(char *input, int *i,
@@ -62,7 +62,9 @@ char				*expand_var_in_dquotes(char *str);
 void				handle_quoted_content(char *input, int *i,
 						t_token_list *tokens, char quote_type);
 
-void				free_tokens(t_token *tokens);
+void				free_tokens(t_token_list *tokens_list);
 char				*get_token_type_str(t_token_type type);
+
+t_token_list		*init_token_list(void);
 
 #endif

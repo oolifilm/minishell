@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:57:49 by julien            #+#    #+#             */
-/*   Updated: 2025/03/03 14:59:36 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:05:21 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,14 @@ void	skip_spaces(char *input, int *i)
 		(*i)++;
 }
 
-void	free_tokens(t_token *tokens)
+void	free_tokens(t_token_list *tokens_list)
 {
 	t_token	*tmp;
+	t_token *tokens;
 
-	if (!tokens)
+	if (!tokens_list)
 		return ;
+	tokens = tokens_list->head;
 	while (tokens)
 	{
 		tmp = tokens;
@@ -97,6 +99,7 @@ void	free_tokens(t_token *tokens)
 		free(tmp->input);
 		free(tmp);
 	}
+	free(tokens_list);
 }
 
 char	*get_token_type_str(t_token_type type)

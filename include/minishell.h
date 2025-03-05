@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/03/03 14:46:22 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:58:36 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	ft_free_split(char **tab);
 
 void	token_is_command(char *input, int *i, t_token_list *tokens,
 			int *is_first_word);
-t_token	*tokenize_input(char *input);
 void	assign_pipe(char input, t_token_list *tokens);
 void	assign_dollar(char input, t_token_list *tokens);
 void	assign_redirection(char *input, int *i, t_token_list *tokens);

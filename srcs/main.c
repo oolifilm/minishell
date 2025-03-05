@@ -6,11 +6,23 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/03/03 14:58:42 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:49:33 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+t_token_list	*init_token_list(void)
+{
+	t_token_list	*tokens;
+
+	tokens = (t_token_list *)malloc(sizeof(t_token_list));
+	if (!tokens)
+		return (NULL);
+	tokens->head = NULL;
+	tokens->cur = NULL;
+	return (tokens);
+}
 
 /* Boucle pour lire l'entrée standard de l'utilisateur et pour afficher le prompt*/
 
@@ -18,12 +30,12 @@ int	main(void)
 {
 	char	*input;
 	char	*prompt;
-	t_token	*tokens;
 	char	*cmd;
 	char	*args[] = {"ls", "-l", NULL};
 	t_token	*tmp;
 
-	cmd = "ls";
+	cmd = NULL;
+	t_token_list *tokens_list;
 	while (1)
 	{
 		prompt = "\033[1;38;5;206mminishell$>\033[0m ";
@@ -40,30 +52,30 @@ int	main(void)
 				printf("\033[H\033[J");
 		}
 		printf("You entered: %s\n", input);
-		tokens = tokenize_input(input);
-		if (!tokens)
+		tokens_list = tokenize_input(input);
+		if (!tokens_list)
 		{
 			printf("[ERROR] tokenize_input returned NULL\n");
 			continue ;
 		}
-		tmp = tokens;
+		tmp = tokens_list->head;
 		while (tmp)
 		{
-			printf("Type: %s\n, Value: %s\n", get_token_type_str(tmp->type),
+			printf("Type: %s, Value: %s\n", get_token_type_str(tmp->type),
 				tmp->input);
 			tmp = tmp->next;
 		}
 		if (ft_strcmp(input, "exit") == 0)
 		{
 			free(input);
-			free_tokens(tokens);
+			free_tokens(tokens_list);
 			clear_history();
 			break ;
 		}
 		if (ft_strcmp(input, "ls") == 0)
 			exec_command(cmd, args);
 		free(input);
-		free_tokens(tokens);
+		free_tokens(tokens_list);
 	}
 	return (0);
 }
