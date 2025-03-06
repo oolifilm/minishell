@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:39:41 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 15:35:23 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:01:57 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ static void	fill_quoted_content(char *input, char *result, int *i)
 		if (input[j] == '$' && input[j + 1])
 		{
 			j = get_env_var_name(input, j, var_name);
-			//env_value = getenv(var_name);
-			if ((env_value = getenv(var_name)) != NULL)
+			env_value = getenv(var_name);
+			if (env_value)
 			{
 				ft_strlcpy(result + len, env_value, ft_strlen(env_value) + 1);
 				len += ft_strlen(env_value);

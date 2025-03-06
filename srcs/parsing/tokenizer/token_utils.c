@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:57:49 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 15:08:33 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:03:41 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,7 @@ char	*get_token_type_str(t_token_type type)
 		return ("REDIR_FILE");
 	else if (type == STRING)
 		return ("STRING");
+	else if (type == DOLLAR)
+		return ("DOLLAR");
 	return ("UNKNOWN");
 }

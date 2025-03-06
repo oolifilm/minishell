@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:02:26 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 15:23:48 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:06:16 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	token_is_command(char *input, int *i, t_token_list *tokens,
 	temp[j] = '\0';
 	if (j > 0)
 	{
+		if (tokens->cur && tokens->cur->type == PIPE)
+			*is_first_word = 1;
 		if (*is_first_word)
 		{
 			add_token(tokens, temp, COMMAND);
