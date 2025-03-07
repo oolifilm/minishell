@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 15:23:06 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:32:22 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+
+/*
+__Fonctionnement :__
+
+Initialise une nouvelle liste chaînée de tokens (t_token_list).
+
+1. Alloue dynamiquement une structure t_token_list.
+2. Vérifie si l'allocation a échoué et retourne NULL en cas d'échec.
+3. Initialise les pointeurs :
+   - head à NULL (début de la liste vide).
+   - cur à NULL (aucun token actuel).
+4. Retourne le pointeur vers la liste nouvellement créée.
+*/
 
 t_token_list	*init_token_list(void)
 {
@@ -24,7 +38,28 @@ t_token_list	*init_token_list(void)
 	return (tokens);
 }
 
-/* Boucle pour lire l'entrée standard de l'utilisateur et pour afficher le prompt*/
+/*
+__Fonctionnement :__
+
+Boucle principale du shell, qui lit l'entrée utilisateur, affiche un prompt et traite les commandes.
+
+1. Affiche un prompt personnalisé en couleur (minishell$>).
+2. Lit l'entrée utilisateur via readline().
+   - Si EOF (Ctrl+D) est détecté, affiche un message et quitte proprement.
+   - Si l'entrée n'est pas vide, elle est ajoutée à l'historique (add_history).
+   - Gère la commande clear pour effacer l'écran.
+3. Affiche l'entrée utilisateur pour le débogage.
+4. Tokenise l'entrée avec tokenize_input().
+   - Si la tokenisation échoue, affiche un message d'erreur et passe à l'itération suivante.
+   - Parcourt et affiche la liste des tokens obtenus.
+5. Vérifie si l'utilisateur a entré exit, et si oui :
+   - Libère l'entrée et les tokens,
+   - Efface l'historique,
+   - Quitte la boucle.
+6. Exécute ls -l si la commande ls est détectée.
+7. Libère la mémoire allouée (input et tokens_list) avant la prochaine itération.
+8. Retourne 0 en fin d'exécution.
+*/
 
 int	main(void)
 {

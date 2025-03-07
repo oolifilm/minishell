@@ -3,23 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:57:49 by julien            #+#    #+#             */
-/*   Updated: 2025/03/06 14:03:41 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:19:51 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
 /*
-Fonction qui cree un nouveau token.
-Puisque chaque element (commande, argument, operateurs etc) est un token,
-on doit creer un nouveau token a chaque fois qu'on rencontre un nouvel element.
-===============================================================================
-On alloue la memoire necessaire pour le token.
-On va copier la valeur de l'element dans le token.
-On va assigner le type de l'element dans le token.
+__Fonctionnement :__
+
+Crée un nouveau token pour chaque élément (commande, argument, opérateur, etc.).
+
+1. Alloue un nouveau token (t_token).
+2. Copie l'entrée input dans un champ input à l'aide de ft_strdup.
+3. Initialise son type (type).
+4. Libère la mémoire allouée et retourne NULL si l'allocation du token ou la duplication de input échoue.
+5. Initialise le pointeur next à NULL.
+6. Retourne le nouveau token.
 */
 
 t_token	*new_token(char *input, t_token_type type)
@@ -41,16 +44,20 @@ t_token	*new_token(char *input, t_token_type type)
 }
 
 /*
-t_token			**head = pointeur de la tete de la liste chainee.
-t_token			**cur = pointeur de la fin de la liste chainee.
-char			*input = valeur de l'element.
-t_token_type	type = type de l'element.
-=============================================================
-Fonction qui ajoute un token a la liste chainee.
-On va creer un nouveau token.
-Si la liste chainee est vide,
-	on va assigner le nouveau token a la tete de la liste.
-Sinon, on va assigner le nouveau token a la fin de la liste.
+__Fonctionnement :__
+
+Ajoute un token à la liste chaînée.
+
+t_token     **head = pointeur de la tête de la liste chaînée.
+t_token     **cur = pointeur de la fin de la liste chaînée.
+char        *input = valeur de l'élément.
+t_token_type    type = type de l'élément.
+
+1. Crée un nouveau token avec la valeur input et le type type.
+2. L'ajoute à une liste chaînée de tokens (t_token_list).
+3. Initialise head et cur avec le nouveau token si la liste est vide.
+4. Sinon, l'ajoute à la fin de la liste et met à jour cur.
+5. Retourne le token ajouté ou NULL en cas d’échec d’allocation.
 */
 
 t_token	*add_token(t_token_list *tokens, char *input, t_token_type type)
@@ -74,7 +81,11 @@ t_token	*add_token(t_token_list *tokens, char *input, t_token_type type)
 }
 
 /*
-Function to skip white spaces between tokens
+__Fonctionnement :__
+
+Ignore les WHITE SPACE pour positionner i directement sur le premier caractère significatif de l'entrée.
+
+1. Avance l'index i tant que le caractère courant dans input est un SPACE, TAB ou \n.
 */
 
 void	skip_spaces(char *input, int *i)
@@ -100,6 +111,15 @@ void	free_tokens(t_token_list *tokens_list)
 	}
 	free(tokens_list);
 }
+
+/*
+__Fonctionnement :__
+
+Renvoie une chaîne de caractères correspondant au type de token (t_token_type) passé en paramètre.
+
+1. Utilise une série de comparaisons pour associer chaque type à son nom sous forme de chaîne.
+2. Retourne UNKNOWN si le type ne correspond à aucun cas connu.
+*/
 
 char	*get_token_type_str(t_token_type type)
 {

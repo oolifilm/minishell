@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/05 15:08:21 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:30:19 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+
+/*
+__Fonctionnement :__
+
+Analyse la chaîne de caractères input et la transforme en une liste chaînée de tokens (t_token_list).
+
+1. Ignore les espaces initiaux.
+2. Parcourt l'entrée caractère par caractère pour identifier et traiter les différents types de tokens :
+   - Variables : $
+   - Pipes : |
+   - Redirections : < ou >
+   - Contenu entre guillemets : " " ou ' '
+3. Détecte les commandes et gère leur position dans la ligne de commande (is_first_word).
+4. Utilise init_token_list() pour initialiser la liste des tokens.
+5. Retourne la liste chaînée contenant les tokens extraits.
+*/
 
 t_token_list	*tokenize_input(char *input)
 {

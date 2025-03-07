@@ -3,20 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   double_quoted.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:39:41 by julien            #+#    #+#             */
-/*   Updated: 2025/03/06 14:01:57 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:22:57 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
 /*
-Fonction pour récupérer le nom de la variable d'environnement
-1. Avance jusqu'au prochain caractère après le '$'.
-2. Récupère le nom de la variable d'environnement.
-3. Retourne la position actuelle.
+__Fonctionnement :__
+
+Extrait le nom d'une variable d'environnement à partir d'une chaîne input.
+
+1. Commence à partir de l'index j.
+2. Copie les caractères alphanumériques et les underscores dans var_name.
+3. S'arrête dès qu'un caractère non valide est rencontré. 
+4. Retourne le nouvel index j après la variable.
 */
 
 static int	get_env_var_name(char *input, int j, char *var_name)
@@ -36,11 +40,16 @@ static int	get_env_var_name(char *input, int j, char *var_name)
 }
 
 /*
-Fonction pour calculer la longueur de la chaîne entre quotes.
-1. Avance jusqu'à la quote fermante.
-2. Si un '$' est trouvé, récupère le nom de la variable d'environnement.
-3. Ajoute la longueur de la valeur de la variable d'environnement.
-4. Retourne la longueur totale.
+__Fonctionnement :__
+
+Calcule la longueur d'une chaîne entre guillemets.
+
+1. Parcourt input à partir de j jusqu'au guillement de fermeture.
+2. Extrait le nom de la variable avec get_env_var_name si rencontre d'un $.
+3. Récupère la valeur de cette variable via getenv(var_name).
+4. Ajoute sa longueur à len si elle existe.
+5. Compte simplement les caractères normaux sinon.
+6. Retourne la longueur totale après expansion des variables.
 */
 
 static int	cal_quoted_len(char *input, int j)
@@ -68,15 +77,18 @@ static int	cal_quoted_len(char *input, int j)
 }
 
 /*
-Fonction pour remplir le contenu entre quotes.
-1. Avance jusqu'à la quote fermante.
-2. Si un '$' est trouvé, récupère le nom de la variable d'environnement.
-3. Si la variable d'environnement existe, ajoute sa valeur.
-4. Sinon, ajoute le caractère tel quel.
-5. Retourne la position actuelle.
-*/
+__Fontionnement :__
 
-// /!\ Fonction qui doit etre reduite
+Remplit result avec le contenu de input.
+
+1. Parcourt innput depuis *i jusu'au guillement de fermeture.
+2. Remplit result avec le meme processus que cal_quoted_len.
+3. Extrait le nom de la variable avec get_env_var_name si rencontre d'un $.
+4. Cherche sa valeur avec getenv(var_name).
+5. Copie la valeur dans result avec ft_strcpy si la variable existe.
+6. Copie le caractère directement si ce n'est pas une variable.
+7. Met *i à jour pour pointer après la fin du contenu cité.
+*/
 
 static void	fill_quoted_content(char *input, char *result, int *i)
 {
@@ -109,12 +121,16 @@ static void	fill_quoted_content(char *input, char *result, int *i)
 }
 
 /*
-Fonction pour traiter les quotes doubles.
-1. Sauvegarde la position actuelle (qui est dans la quote d'ouverture).
-2. Calcule la longueur de la chaîne entre quotes.
-3. Alloue la mémoire nécessaire pour stocker le contenu.
-4. Remplit le contenu entre quotes.
-5. Retourne le résultat.
+__Fonctionnement :__
+
+Extrait et traite le contenu d'une chaîne entre guillemets.
+
+1. Détermine la longueur de la chaîne après expansion des variables avec cal_quoted_len.
+2. Alloue juste l'espace nécessaire pour result.
+3. Utilise malloc(len+1) pour stocker la chaîne expandée.
+4. Vérifie l’échec de l’allocation.
+5. Remplit result en traitant l'expansion des variables d'environnement avec fill_quoted_content.
+6. Renvoie result avec son contenu traité.
 */
 
 static char	*handle_double_quoted(char *input, int *i)
@@ -133,9 +149,12 @@ static char	*handle_double_quoted(char *input, int *i)
 }
 
 /*
-Fonction pour traiter les quotes doubles.
-1. Appelle la fonction pour traiter les quotes doubles.
-2. Retourne le résultat.
+__Fonctionnement :__
+
+Wrappe handle_double_quoted.
+
+1. L'appelle.
+2. Retourne result.
 */
 
 char	*expand_var_in_dquotes(char *str)
