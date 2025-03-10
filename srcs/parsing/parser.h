@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:54:35 by julien            #+#    #+#             */
-/*   Updated: 2025/03/06 16:07:40 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:56:34 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,10 @@ char				*get_token_type_str(t_token_type type);
 
 t_token_list		*init_token_list(void);
 
+int					is_invalid_first_token(t_token *head);
+int					has_consecutive_pipes(t_token *tokens);
+int					has_invalid_redirection(t_token *tokens);
+// int					has_unclosed_quotes(t_token *tokens);
+int					parse_tokens(t_token_list *tokens);
+int					has_unclosed_quote(char *input);
 #endif

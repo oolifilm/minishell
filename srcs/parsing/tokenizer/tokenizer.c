@@ -6,11 +6,12 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/07 16:30:19 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:56:36 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+#include <stdio.h>
 
 /*
 __Fonctionnement :__
@@ -38,6 +39,11 @@ t_token_list	*tokenize_input(char *input)
 	len = ft_strlen(input);
 	i = 0;
 	is_first_word = 1;
+	if (has_unclosed_quote(input))
+	{
+		printf("[ERROR] Syntax error near ' '\n");
+		return (NULL); // Retourne NULL ou gère l'erreur selon ton besoin
+	}
 	tokens = init_token_list();
 	skip_spaces(input, &i);
 	while (i < (int)len)
@@ -50,7 +56,8 @@ t_token_list	*tokenize_input(char *input)
 		else
 		{
 			token_is_command(input, &i, tokens, &is_first_word);
-			i++;
+			skip_spaces(input, &i);
+			// i++;
 		}
 	}
 	return (tokens);

@@ -6,12 +6,11 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/03/07 16:32:22 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:59:47 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 /*
 __Fonctionnement :__
@@ -41,7 +40,8 @@ t_token_list	*init_token_list(void)
 /*
 __Fonctionnement :__
 
-Boucle principale du shell, qui lit l'entrée utilisateur, affiche un prompt et traite les commandes.
+Boucle principale du shell, qui lit l'entrée utilisateur,
+	affiche un prompt et traite les commandes.
 
 1. Affiche un prompt personnalisé en couleur (minishell$>).
 2. Lit l'entrée utilisateur via readline().
@@ -50,7 +50,8 @@ Boucle principale du shell, qui lit l'entrée utilisateur, affiche un prompt et 
    - Gère la commande clear pour effacer l'écran.
 3. Affiche l'entrée utilisateur pour le débogage.
 4. Tokenise l'entrée avec tokenize_input().
-   - Si la tokenisation échoue, affiche un message d'erreur et passe à l'itération suivante.
+   - Si la tokenisation échoue,
+	affiche un message d'erreur et passe à l'itération suivante.
    - Parcourt et affiche la liste des tokens obtenus.
 5. Vérifie si l'utilisateur a entré exit, et si oui :
    - Libère l'entrée et les tokens,
@@ -63,11 +64,13 @@ Boucle principale du shell, qui lit l'entrée utilisateur, affiche un prompt et 
 
 int	main(void)
 {
-	char	*input;
-	char	*prompt;
-	char	*args[] = {"ls", "-l", NULL};
-	t_token	*tmp;
-	t_token_list *tokens_list;
+	char			*input;
+	char			*prompt;
+	char			*args_ls[] = {"ls", "-l", NULL};
+	t_token			*tmp;
+	t_token_list	*tokens_list;
+				char *args_cd[3] = {"cd", NULL, NULL};
+
 	while (1)
 	{
 		prompt = "\033[1;38;5;206mminishell$>\033[0m ";
@@ -86,8 +89,11 @@ int	main(void)
 		printf("You entered: %s\n", input);
 		tokens_list = tokenize_input(input);
 		if (!tokens_list)
+			continue ;
+		if (!parse_tokens(tokens_list))
 		{
-			printf("[ERROR] tokenize_input returned NULL\n");
+			free_tokens(tokens_list);
+			free(input);
 			continue ;
 		}
 		tmp = tokens_list->head;
@@ -95,11 +101,11 @@ int	main(void)
 		{
 			if (ft_strcmp(tmp->input, "cd") == 0)
 			{
-				char *args[3] = {"cd", NULL, NULL};
 				if (tmp->next)
-					args[1] = tmp->next->input;
-				ft_cd(args);
-				ft_pwd((char *[]){"pwd", NULL}); // Afficher le nouveau répertoire
+					args_cd[1] = tmp->next->input;
+				ft_cd(args_cd);
+				ft_pwd((char *[]){"pwd", NULL});
+					// Afficher le nouveau répertoire
 			}
 			else if (ft_strcmp(tmp->input, "pwd") == 0)
 			{
@@ -109,8 +115,8 @@ int	main(void)
 			{
 				while (tmp)
 				{
-					printf("Type: %s, Value: %s\n", get_token_type_str(tmp->type),
-						tmp->input);
+					printf("Type: %s, Value: %s\n",
+						get_token_type_str(tmp->type), tmp->input);
 					tmp = tmp->next;
 				}
 			}
@@ -123,7 +129,7 @@ int	main(void)
 			break ;
 		}
 		if (ft_strcmp(input, "ls") == 0)
-			exec_command("ls", args);
+			exec_command("ls", args_ls);
 		free(input);
 		free_tokens(tokens_list);
 	}
