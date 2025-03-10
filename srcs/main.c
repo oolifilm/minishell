@@ -65,11 +65,8 @@ int	main(void)
 {
 	char	*input;
 	char	*prompt;
-	char	*cmd;
 	char	*args[] = {"ls", "-l", NULL};
 	t_token	*tmp;
-
-	cmd = NULL;
 	t_token_list *tokens_list;
 	while (1)
 	{
@@ -94,11 +91,29 @@ int	main(void)
 			continue ;
 		}
 		tmp = tokens_list->head;
-		while (tmp)
+		if (tmp && tmp->type == COMMAND)
 		{
-			printf("Type: %s, Value: %s\n", get_token_type_str(tmp->type),
-				tmp->input);
-			tmp = tmp->next;
+			if (ft_strcmp(tmp->input, "cd") == 0)
+			{
+				char *args[3] = {"cd", NULL, NULL};
+				if (tmp->next)
+					args[1] = tmp->next->input;
+				ft_cd(args);
+				ft_pwd((char *[]){"pwd", NULL}); // Afficher le nouveau répertoire
+			}
+			else if (ft_strcmp(tmp->input, "pwd") == 0)
+			{
+				ft_pwd((char *[]){"pwd", NULL});
+			}
+			else
+			{
+				while (tmp)
+				{
+					printf("Type: %s, Value: %s\n", get_token_type_str(tmp->type),
+						tmp->input);
+					tmp = tmp->next;
+				}
+			}
 		}
 		if (ft_strcmp(input, "exit") == 0)
 		{

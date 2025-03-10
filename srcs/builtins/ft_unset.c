@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:16 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/01/30 12:13:58 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:21:45 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 /*
 Ce qui nous est démandé dans le sujet : unset with no options
@@ -30,7 +30,7 @@ int	ft_unset(char **argv)
 	len = ft_strlen(argv[1]);
 	while (*env)
 	{
-		if (ft_strnmp(*env, argv[1], len) == 0 && (*env)[len] == '=')
+		if (ft_strncmp(*env, argv[1], len) == 0 && (*env)[len] == '=')
 		{
 			while (*env_to_remove)
 			{

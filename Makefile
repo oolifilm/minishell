@@ -25,7 +25,14 @@ SRC			=	srcs/main.c \
 				srcs/parsing/tokenizer/token_command.c \
 				srcs/parsing/tokenizer/double_quoted.c \
 				srcs/parsing/parser/parsing_utils.c \
-				srcs/parsing/tokenizer/token_is_redir.c
+				srcs/parsing/tokenizer/token_is_redir.c \
+				srcs/builtins/ft_cd.c \
+				srcs/builtins/ft_echo.c \
+				srcs/builtins/ft_env.c \
+				srcs/builtins/ft_exit.c \
+				srcs/builtins/ft_export.c \
+				srcs/builtins/ft_pwd.c \
+				srcs/builtins/ft_unset.c
 
 OBJ 		= 	$(SRC:.c=.o)
 

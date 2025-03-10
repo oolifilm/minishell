@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:15 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/05 15:02:40 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:21:43 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
+#include <errno.h>
 
 /*
 Sujet : pwd with no options
@@ -22,12 +23,16 @@ getcwd = obtenir le répertoire courant
 strerror = Retourner une string d'erreur spécifique à la fonction getcwd
 */
 
-int	ft_pwd(void)
+int	ft_pwd(char **argv)
 {
-	if (getcwd(g_env->pwd, 1024) == NULL)
+	char	buffer[4096];
+	(void)argv;
+
+	if (getcwd(buffer, sizeof(buffer)) == NULL)
 	{
-		printf("pwd: %s\n", strerror(errno));
+		perror("pwd");
 		return (1);
 	}
+	printf("%s\n", buffer);
 	return (0);
 }
