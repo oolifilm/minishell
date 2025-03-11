@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/10 10:09:07 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/10 17:27:30 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@
 ** - Utilise getenv pour obtenir la valeur de la variable d'environnement HOME
 ** - Affiche une erreur si HOME n'est pas défini
 */
-static char *get_home_dir(void)
+
+static char	*get_home_dir(void)
 {
-	char *home;
+	char	*home;
 
 	home = getenv("HOME");
 	if (!home)
@@ -41,9 +42,10 @@ static char *get_home_dir(void)
 ** - Affiche une erreur si OLDPWD n'est pas défini
 ** - Utilisé pour la commande 'cd -'
 */
-static char *get_oldpwd(void)
+
+static char	*get_oldpwd(void)
 {
-	char *oldpwd;
+	char	*oldpwd;
 
 	oldpwd = getenv("OLDPWD");
 	if (!oldpwd)
@@ -63,31 +65,32 @@ static char *get_oldpwd(void)
 ** - Met à jour PWD avec le nouveau répertoire courant
 ** - Gère les erreurs potentielles de getcwd et setenv
 */
-static int update_pwd(void)
+
+static int	update_pwd(void)
 {
-	char buffer[4096];
-	char *old_pwd;
-	char *pwd;
-	int ret;
+	char	buffer[4096];
+	char	*old_pwd;
+	char	*pwd;
+	int		ret;
 
 	pwd = getenv("PWD");
-	old_pwd = pwd ? ft_strdup(pwd) : ft_strdup("");
+	if (pwd)
+		old_pwd = ft_strdup(pwd);
+	else
+		old_pwd = ft_strdup("");
 	if (!old_pwd)
 		return (1);
-
 	if (!getcwd(buffer, sizeof(buffer)))
 	{
 		free(old_pwd);
 		printf("cd: error getting current directory: %s\n", strerror(errno));
 		return (1);
 	}
-
 	ret = 0;
 	if (setenv("OLDPWD", old_pwd, 1) == -1)
 		ret = 1;
 	if (setenv("PWD", buffer, 1) == -1)
 		ret = 1;
-
 	free(old_pwd);
 	return (ret);
 }
@@ -102,9 +105,10 @@ static int update_pwd(void)
 ** - Avec un chemin : change vers le chemin spécifié (relatif ou absolu)
 ** - Met à jour PWD et OLDPWD après chaque changement réussi
 */
-int ft_cd(char **argv)
+
+int	ft_cd(char **argv)
 {
-	char *path;
+	char	*path;
 
 	if (!argv[1])
 	{
@@ -127,4 +131,32 @@ int ft_cd(char **argv)
 		return (1);
 	}
 	return (update_pwd());
+}
+
+/*
+PWD ne marche pas ?
+CD marche
+*/
+
+int	handle_command(t_token_list *tokens)
+{
+	t_token	*tmp;
+	char	*args[3] = {"", NULL, NULL};
+
+	tmp = tokens->head;
+	if (tmp && tmp->type == COMMAND)
+	{
+		if (ft_strcmp(tmp->input, "cd") == 0)
+		{
+			args[0] = "cd";
+			if (tmp->next)
+				args[1] = tmp->next->input;
+			ft_cd(args);
+		}
+		else if (ft_strcmp(tmp->input, "pwd") == 0)
+		{
+			ft_pwd(NULL);
+		}
+	}
+	return (0);
 }

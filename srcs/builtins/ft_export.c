@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:14 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/10 10:46:29 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/10 14:36:58 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 ** Exemples valides: "PATH=/usr/bin", "HOME=/Users/julien", "_TEST=123"
 ** Exemples invalides: "1VAR=test", "VAR", "=value"
 */
-static int is_valid_env_var(const char *var)
+static int	is_valid_env_var(const char *var)
 {
-	int i;
+	int	i;
 
 	if (!var || !*var)
 		return (0);
@@ -46,7 +46,7 @@ static int is_valid_env_var(const char *var)
 /*
 ** Remplace une variable d'environnement existante par une nouvelle valeur
 ** @param var: la nouvelle variable (ex: "PATH=/nouveau/chemin")
-** @return: 
+** @return:
 **   0  : si la variable a été remplacée avec succès
 **   1  : si erreur d'allocation mémoire
 **   -1 : si la variable n'existe pas dans l'environnement
@@ -55,11 +55,11 @@ static int is_valid_env_var(const char *var)
 ** Si environ contient "PATH=/usr/bin" et on appelle avec var="PATH=/bin"
 ** alors environ sera modifié pour contenir "PATH=/bin"
 */
-static int replace_env_var(char *var)
+static int	replace_env_var(char *var)
 {
-	int i;
-	size_t var_len;
-	char *equal_sign;
+	int		i;
+	size_t	var_len;
+	char	*equal_sign;
 
 	equal_sign = ft_strchr(var, '=');
 	if (!equal_sign)
@@ -68,7 +68,7 @@ static int replace_env_var(char *var)
 	i = 0;
 	while (environ[i])
 	{
-		if (ft_strncmp(environ[i], var, var_len) == 0 
+		if (ft_strncmp(environ[i], var, var_len) == 0
 			&& environ[i][var_len] == '=')
 		{
 			free(environ[i]);
@@ -87,12 +87,12 @@ static int replace_env_var(char *var)
 ** @param env: le tableau à libérer
 ** @return: void
 */
-static void free_env_array(char **env)
+static void	free_env_array(char **env)
 {
-	size_t i;
+	size_t	i;
 
 	if (!env)
-		return;
+		return ;
 	i = 0;
 	while (env[i])
 		free(env[i++]);
@@ -105,7 +105,7 @@ static void free_env_array(char **env)
 ** @param count: pointeur vers le compteur d'éléments
 ** @return: 1 si erreur, 0 si succès
 */
-static int init_new_env(char ***new_env, size_t *count)
+static int	init_new_env(char ***new_env, size_t *count)
 {
 	*count = 0;
 	while (environ[*count])
@@ -121,14 +121,15 @@ static int init_new_env(char ***new_env, size_t *count)
 ** @param count: nombre de variables actuelles
 ** @return: 1 si erreur, 0 si succès
 */
-static int copy_and_add_var(char **new_env, char *var, size_t count)
+static int	copy_and_add_var(char **new_env, char *var, size_t count)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < count && environ[i])
 	{
-		if (!(new_env[i] = ft_strdup(environ[i])))
+		new_env[i] = ft_strdup(environ[i]);
+		if (!new_env[i])
 		{
 			while (i > 0)
 				free(new_env[--i]);
@@ -137,7 +138,8 @@ static int copy_and_add_var(char **new_env, char *var, size_t count)
 		}
 		i++;
 	}
-	if (!(new_env[count] = ft_strdup(var)))
+	new_env[i] = ft_strdup(var);
+	if (!new_env[i])
 	{
 		while (i > 0)
 			free(new_env[--i]);
@@ -191,7 +193,7 @@ int	add_env(char *var)
 */
 int	ft_export(char **argv)
 {
-	int i;
+	int	i;
 
 	if (!argv[1])
 	{

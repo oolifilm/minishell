@@ -6,7 +6,7 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/03/10 15:35:58 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:58:14 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 # include "../libft/libft.h"
 # include "../srcs/parsing/executor/exec.h"
-# include "../srcs/parsing/parser.h"
-# include "builtins.h"
+# include "../srcs/parsing/tokenizer/tokenizer.h"
+# include "../srcs/parsing/parser/parser.h"
+# include "../srcs/builtins/builtins.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>

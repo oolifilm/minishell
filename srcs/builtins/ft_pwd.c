@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:15 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/10 10:21:43 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/10 16:50:03 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ strerror = Retourner une string d'erreur spécifique à la fonction getcwd
 int	ft_pwd(char **argv)
 {
 	char	buffer[4096];
-	(void)argv;
 
+	(void)argv;
 	if (getcwd(buffer, sizeof(buffer)) == NULL)
 	{
 		perror("pwd");

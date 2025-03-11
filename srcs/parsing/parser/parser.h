@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:10:08 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/06 16:13:41 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:37:24 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 
 typedef struct s_cmd
 {
-	char	**args;
-	int		infile;
-	int		outfile;
-    struct s_cmd	*next;
-}			t_cmd;
+	char			**args;
+	int				infile;
+	int				outfile;
+	struct s_cmd	*next;
+}					t_cmd;
 
 #endif

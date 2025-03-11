@@ -6,36 +6,11 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/03/10 16:59:47 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:14:26 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-/*
-__Fonctionnement :__
-
-Initialise une nouvelle liste chaînée de tokens (t_token_list).
-
-1. Alloue dynamiquement une structure t_token_list.
-2. Vérifie si l'allocation a échoué et retourne NULL en cas d'échec.
-3. Initialise les pointeurs :
-   - head à NULL (début de la liste vide).
-   - cur à NULL (aucun token actuel).
-4. Retourne le pointeur vers la liste nouvellement créée.
-*/
-
-t_token_list	*init_token_list(void)
-{
-	t_token_list	*tokens;
-
-	tokens = (t_token_list *)malloc(sizeof(t_token_list));
-	if (!tokens)
-		return (NULL);
-	tokens->head = NULL;
-	tokens->cur = NULL;
-	return (tokens);
-}
 
 /*
 __Fonctionnement :__
@@ -66,10 +41,9 @@ int	main(void)
 {
 	char			*input;
 	char			*prompt;
-	char			*args_ls[] = {"ls", "-l", NULL};
+	char			*args[] = {"ls", "-l", NULL};
 	t_token			*tmp;
 	t_token_list	*tokens_list;
-				char *args_cd[3] = {"cd", NULL, NULL};
 
 	while (1)
 	{
@@ -86,10 +60,13 @@ int	main(void)
 			if (ft_strcmp(input, "clear") == 0)
 				printf("\033[H\033[J");
 		}
-		printf("You entered: %s\n", input);
+		printf("%s\n", input);
 		tokens_list = tokenize_input(input);
 		if (!tokens_list)
+		{
+			printf("[ERROR] tokenize_input returned NULL\n");
 			continue ;
+		}
 		if (!parse_tokens(tokens_list))
 		{
 			free_tokens(tokens_list);
@@ -97,39 +74,24 @@ int	main(void)
 			continue ;
 		}
 		tmp = tokens_list->head;
-		if (tmp && tmp->type == COMMAND)
+		while (tmp)
 		{
-			if (ft_strcmp(tmp->input, "cd") == 0)
-			{
-				if (tmp->next)
-					args_cd[1] = tmp->next->input;
-				ft_cd(args_cd);
-				ft_pwd((char *[]){"pwd", NULL});
-					// Afficher le nouveau répertoire
-			}
-			else if (ft_strcmp(tmp->input, "pwd") == 0)
-			{
-				ft_pwd((char *[]){"pwd", NULL});
-			}
-			else
-			{
-				while (tmp)
-				{
-					printf("Type: %s, Value: %s\n",
-						get_token_type_str(tmp->type), tmp->input);
-					tmp = tmp->next;
-				}
-			}
+			printf("Type: %s, Value: %s\n", get_token_type_str(tmp->type),
+				tmp->input);
+			tmp = tmp->next;
 		}
+		handle_command(tokens_list);
+		ft_echo_is_command(tokens_list);
+		ft_env_is_command(tokens_list);
 		if (ft_strcmp(input, "exit") == 0)
 		{
 			free(input);
 			free_tokens(tokens_list);
 			clear_history();
-			break ;
+			ft_exit(NULL);
 		}
 		if (ft_strcmp(input, "ls") == 0)
-			exec_command("ls", args_ls);
+			exec_command("ls", args);
 		free(input);
 		free_tokens(tokens_list);
 	}

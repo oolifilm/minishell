@@ -6,12 +6,36 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/10 16:56:36 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:14:18 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-#include <stdio.h>
+
+/*
+__Fonctionnement :__
+
+Initialise une nouvelle liste chaînée de tokens (t_token_list).
+
+1. Alloue dynamiquement une structure t_token_list.
+2. Vérifie si l'allocation a échoué et retourne NULL en cas d'échec.
+3. Initialise les pointeurs :
+   - head à NULL (début de la liste vide).
+   - cur à NULL (aucun token actuel).
+4. Retourne le pointeur vers la liste nouvellement créée.
+*/
+
+t_token_list	*init_token_list(void)
+{
+	t_token_list	*tokens;
+
+	tokens = (t_token_list *)malloc(sizeof(t_token_list));
+	if (!tokens)
+		return (NULL);
+	tokens->head = NULL;
+	tokens->cur = NULL;
+	return (tokens);
+}
 
 /*
 __Fonctionnement :__
@@ -56,8 +80,7 @@ t_token_list	*tokenize_input(char *input)
 		else
 		{
 			token_is_command(input, &i, tokens, &is_first_word);
-			skip_spaces(input, &i);
-			// i++;
+			i++;
 		}
 	}
 	return (tokens);

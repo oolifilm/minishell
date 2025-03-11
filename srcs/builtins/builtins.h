@@ -5,42 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 12:07:20 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/05 14:59:01 by jbanchon         ###   ########.fr       */
+/*   Created: 2025/03/10 14:50:01 by jbanchon          #+#    #+#             */
+/*   Updated: 2025/03/10 16:50:09 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
+# include "../../include/minishell.h"
+
 extern char	**environ;
 
-/*======Function CD======*/
+/*=====FT_CD=====*/
 
 int			ft_cd(char **argv);
+int			handle_command(t_token_list *tokens);
 
-/*======Function ECHO======*/
+/*=====FT_ECHO=====*/
 
 int			ft_echo(char **argv);
+int			ft_echo_is_command(t_token_list *tokens);
 
-/*=======Function ENV======*/
+/*=====FT_ENV=====*/
 
-int			ft_env(char **argv);
-int			add_env(char *var);
+int			ft_env(char **envp);
+int			ft_env_is_command(t_token_list *tokens);
 
-/*======Function EXIT======*/
+/*=====FT_EXIT=====*/
 
 int			ft_exit(char **argv);
 
-/*======Function EXPORT======*/
+/*=====FT_EXPORT=====*/
 
+int			add_env(char *var);
 int			ft_export(char **argv);
 
-/*======Function PWD======*/
+/*=====FT_PWD=====*/
 
 int			ft_pwd(char **argv);
 
-/*======Function UNSET======*/
+/*=====FT_UNSET=====*/
 
 int			ft_unset(char **argv);
 

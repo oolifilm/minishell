@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:54:06 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/06 16:14:06 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:37:42 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,3 @@ On va chercher separer les commandes pour mieux les traiter.
 	ls -l    grep "hello"
 
 */
-

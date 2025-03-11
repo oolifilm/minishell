@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:15:49 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 15:03:09 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:43:13 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define EXEC_H
 
 # include "../../../include/minishell.h"
-# include "../parser.h"
+# include "../tokenizer/tokenizer.h"
 
 /*typedef struct s_token
 {
