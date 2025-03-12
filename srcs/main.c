@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/03/11 13:14:26 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:50:36 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(void)
 			if (ft_strcmp(input, "clear") == 0)
 				printf("\033[H\033[J");
 		}
-		printf("%s\n", input);
+		//printf("%s\n", input);
 		tokens_list = tokenize_input(input);
 		if (!tokens_list)
 		{
@@ -81,6 +81,7 @@ int	main(void)
 			tmp = tmp->next;
 		}
 		handle_command(tokens_list);
+		ft_export_is_command(tokens_list);
 		ft_echo_is_command(tokens_list);
 		ft_env_is_command(tokens_list);
 		if (ft_strcmp(input, "exit") == 0)

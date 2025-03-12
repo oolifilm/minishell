@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 14:50:01 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/10 16:50:09 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:50:47 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int			ft_exit(char **argv);
 
 int			add_env(char *var);
 int			ft_export(char **argv);
+int			ft_export_is_command(t_token_list *tokens);
 
 /*=====FT_PWD=====*/
 
