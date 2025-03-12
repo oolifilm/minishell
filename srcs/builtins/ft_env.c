@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:09 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/10 15:42:26 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:41:17 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int	ft_env(char **envp)
 	return (0);
 }
 
-int ft_env_is_command(t_token_list *tokens)
+int	ft_env_is_command(t_token_list *tokens)
 {
-	t_token *tmp;
-	int i;
-	char *argv[100];
+	t_token	*tmp;
+	int		i;
+	char	*argv[100];
 
 	i = 0;
 	tmp = tokens->head;

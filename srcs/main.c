@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/03/12 12:50:36 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:28:37 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(void)
 			tmp = tmp->next;
 		}
 		handle_command(tokens_list);
-		ft_export_is_command(tokens_list);
+		ft_unset_is_command(tokens_list);
 		ft_echo_is_command(tokens_list);
 		ft_env_is_command(tokens_list);
 		if (ft_strcmp(input, "exit") == 0)

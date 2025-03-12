@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/10 17:27:30 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:43:46 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,11 @@ CD marche
 int	handle_command(t_token_list *tokens)
 {
 	t_token	*tmp;
-	char	*args[3] = {"", NULL, NULL};
+	char	*args[3];
 
+	args[0] = "";
+	args[1] = NULL;
+	args[2] = NULL;
 	tmp = tokens->head;
 	if (tmp && tmp->type == COMMAND)
 	{

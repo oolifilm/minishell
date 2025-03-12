@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:16 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/10 10:21:45 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/12 15:34:34 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,72 @@ Commande unset : supprimer une variable d'environnement
 Utilisation : unset [variable]
 */
 
+void	remove_env_var(char *var)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	**new_env;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	while (environ[i])
+		i++;
+	new_env = malloc(sizeof(char *) * i);
+	if (!new_env)
+		return ;
+	i = 0;
+	while (environ[i])
+	{
+		if (ft_strncmp(environ[i], var, ft_strlen(var) == 0)
+			&& environ[i][ft_strlen(var)] == '=')
+		{
+			i++;
+			continue ;
+		}
+		new_env[j] = ft_strdup(environ[i]);
+	}
+	new_env[j] = NULL;
+	environ = new_env;
+}
+
 int	ft_unset(char **argv)
 {
-	char	**env;
-	char	**env_to_remove;
-	size_t	len;
+	int	i;
 
-	env = environ;
-	env_to_remove = env;
-	len = ft_strlen(argv[1]);
-	while (*env)
+	i = 1;
+	while (argv[i])
 	{
-		if (ft_strncmp(*env, argv[1], len) == 0 && (*env)[len] == '=')
+		remove_env_var(argv[i]);
+		i++;
+	}
+	return (0);
+}
+
+int	ft_unset_is_command(t_token_list *tokens)
+{
+	t_token	*tmp;
+	int		i;
+	char	*argv[100];
+
+	i = 0;
+	tmp = tokens->head;
+	while (tmp)
+	{
+		if (tmp->type == COMMAND && ft_strcmp(tmp->input, "unset") == 0)
 		{
-			while (*env_to_remove)
+			tmp = tmp->next;
+			while (tmp && (tmp->type == ARGUMENT || tmp->type == STRING))
 			{
-				*env_to_remove = *(env_to_remove + 1);
-				env_to_remove++;
+				argv[i++] = tmp->input;
+				tmp = tmp->next;
 			}
-			break ;
+			argv[i] = NULL;
+			ft_unset(argv);
+			return (1);
 		}
-		env++;
+		tmp = tmp->next;
 	}
 	return (0);
 }

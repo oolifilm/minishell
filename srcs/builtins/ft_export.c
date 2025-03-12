@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:14 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/12 13:05:10 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:49:19 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,20 +217,3 @@ int	ft_export(char **argv)
 	return (0);
 }
 
-int	ft_export_is_command(t_token_list *tokens)
-{
-	t_token	*tmp;
-	
-	tmp = tokens->head;
-	while (tmp)
-	{
-		if (tmp->type == COMMAND && ft_strcmp(tmp->input, "export") == 0)
-		{
-			char	*args[] = {"export", tmp->input, NULL};
-			ft_export(args);
-			return (1);
-		}
-		tmp = tmp->next;
-	}
-	return (0);
-}
