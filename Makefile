@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+         #
+#    By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:08:51 by leaugust          #+#    #+#              #
-#    Updated: 2025/03/10 15:34:10 by leaugust         ###   ########.fr        #
+#    Updated: 2025/03/13 10:05:18 by jbanchon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,24 +16,24 @@ CFLAGS		=	-Wall -Wextra -Werror
 LIBFTDIR 	=	libft
 LDFLAGS 	=	-lreadline -L$(LIBFTDIR) -lft 
 
-SRC			=	srcs/main.c \
-				srcs/parsing/executor/exec_cmd.c \
-				srcs/parsing/tokenizer/tokenizer.c \
+SRC			=	srcs/parsing/tokenizer/tokenizer.c \
 				srcs/parsing/tokenizer/token_utils.c \
 				srcs/parsing/tokenizer/token_operators.c \
 				srcs/parsing/tokenizer/token_quotes.c \
 				srcs/parsing/tokenizer/token_command.c \
 				srcs/parsing/tokenizer/double_quoted.c \
-				srcs/parsing/parser/parsing_utils.c \
 				srcs/parsing/tokenizer/token_is_redir.c \
-				srcs/parsing/tokenizer/parsing.c \
+				srcs/parsing/parser/parsing_utils.c \
+				srcs/parsing/parser/parsing.c \
+				srcs/parsing/executor/exec_cmd.c \
 				srcs/builtins/ft_cd.c \
 				srcs/builtins/ft_echo.c \
 				srcs/builtins/ft_env.c \
 				srcs/builtins/ft_exit.c \
 				srcs/builtins/ft_export.c \
 				srcs/builtins/ft_pwd.c \
-				srcs/builtins/ft_unset.c
+				srcs/builtins/ft_unset.c \
+				srcs/main.c 
 
 OBJ 		= 	$(SRC:.c=.o)
 

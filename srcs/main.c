@@ -6,11 +6,31 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/03/12 15:28:37 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/13 10:44:43 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+char	**create_argv_from_input(t_token_list *tokens)
+{
+	char	**argv;
+	int		argc;
+	t_token	*tmp;
+
+	argv = malloc(sizeof(char *) * (tokens->size + 1));
+	if (!argv)
+		return (NULL);
+	tmp = tokens->head;
+	argc = 0;
+	while (tmp)
+	{
+		argv[argc++] = ft_strdup(tmp->input);
+		tmp = tmp->next;
+	}
+	argv[argc] = NULL;
+	return (argv);
+}
 
 /*
 __Fonctionnement :__
@@ -41,9 +61,9 @@ int	main(void)
 {
 	char			*input;
 	char			*prompt;
-	char			*args[] = {"ls", "-l", NULL};
 	t_token			*tmp;
 	t_token_list	*tokens_list;
+	char			**args;
 
 	while (1)
 	{
@@ -51,7 +71,7 @@ int	main(void)
 		input = readline(prompt);
 		if (!input)
 		{
-			printf(RED "[DEBUG] EOF detected, exiting...\n" RESET);
+			printf("[DEBUG] EOF detected, exiting...\n");
 			exit(0);
 		}
 		if (*input)
@@ -60,7 +80,7 @@ int	main(void)
 			if (ft_strcmp(input, "clear") == 0)
 				printf("\033[H\033[J");
 		}
-		//printf("%s\n", input);
+		// printf("%s\n", input);
 		tokens_list = tokenize_input(input);
 		if (!tokens_list)
 		{
@@ -80,6 +100,9 @@ int	main(void)
 				tmp->input);
 			tmp = tmp->next;
 		}
+		args = create_argv_from_input(tokens_list);
+		if (ft_strcmp(input, "export") == 0)
+			ft_export(args);
 		handle_command(tokens_list);
 		ft_unset_is_command(tokens_list);
 		ft_echo_is_command(tokens_list);
@@ -92,7 +115,7 @@ int	main(void)
 			ft_exit(NULL);
 		}
 		if (ft_strcmp(input, "ls") == 0)
-			exec_command("ls", args);
+			exec_command("ls", NULL);
 		free(input);
 		free_tokens(tokens_list);
 	}
