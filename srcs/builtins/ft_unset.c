@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:16 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/12 15:34:34 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/17 09:26:15 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@ void	remove_env_var(char *var)
 {
 	int		i;
 	int		j;
-	int		len;
 	char	**new_env;
 
 	i = 0;
 	j = 0;
-	len = 0;
 	while (environ[i])
 		i++;
 	new_env = malloc(sizeof(char *) * i);

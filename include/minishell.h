@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/03/13 10:42:06 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/03/17 11:03:32 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,5 +181,12 @@ int					ft_pwd(char **argv);
 
 int					ft_unset(char **argv);
 int					ft_unset_is_command(t_token_list *tokens);
+
+/*=====BUILTIN_UTILS=====*/
+
+int	is_valid_env_var(const char *var);
+void	print_env_var(char *var);
+int	compare_vars(const void *a, const void *b);
+int	print_sorted_env(void);
 
 #endif

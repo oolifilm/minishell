@@ -15,20 +15,24 @@ MINISHELL TODO LIST
    ✅ Recherche d'exécutables dans PATH
    ✅ Implémentation fork() et execve()
    ✅ Structure de base pour l'exécution
-   ☐ Gestion des processus (wait)
+   ✅ Gestion des processus (wait)
    ☐ Gestion des codes de retour ($?)
-   ☐ Gestion des erreurs d'exécution
+   ☐ Gestion des erreurs d'exécution complète
 
 3. BUILT-INS [Priorité: HAUTE]
-   ☐ echo (avec option -n)
-   ☐ pwd (sans options)
-   ☐ env (sans options/arguments)
-   ☐ exit (avec gestion des arguments)
-   ☐ cd (chemins relatifs/absolus)
-   ☐ export (sans options)
-   ☐ unset (sans options)
+   ✅ echo (avec option -n)
+   ✅ pwd (sans options)
+   ✅ env (sans options/arguments)
+   ✅ exit (avec gestion des arguments)
+   ✅ cd (chemins relatifs/absolus)
+   ✅ export (sans options)
+      - ✅ Gestion des variables d'environnement
+      - ✅ Affichage trié des variables
+      - ✅ Validation des noms de variables
+      - ✅ Structure de code optimisée (5 fonctions max par fichier)
+   ✅ unset (sans options)
 
-4. REDIRECTIONS [Priorité: MOYENNE]
+4. REDIRECTIONS [Priorité: HAUTE]
    ✅ Redirection entrée (<)
    ✅ Redirection sortie (>)
    ✅ Redirection sortie append (>>)
@@ -39,20 +43,20 @@ MINISHELL TODO LIST
       - ☐ Stockage temporaire du contenu
    ☐ Gestion des erreurs de redirection (fichiers inexistants, permissions)
 
-5. PIPES [Priorité: MOYENNE]
+5. PIPES [Priorité: HAUTE]
    ✅ Parsing des pipes
    ☐ Création des pipes
    ☐ Redirection entrée/sortie entre processus
    ☐ Gestion des processus multiples
    ☐ Gestion des erreurs de pipe
 
-6. GESTION DES SIGNAUX [Priorité: BASSE]
+6. GESTION DES SIGNAUX [Priorité: MOYENNE]
    ☐ ctrl-C (nouveau prompt)
    ☐ ctrl-D (quitter)
    ☐ ctrl-\ (rien faire)
    ☐ Gestion des signaux dans les processus enfants
 
-7. NETTOYAGE ET OPTIMISATION [Priorité: BASSE]
+7. NETTOYAGE ET OPTIMISATION [Priorité: MOYENNE]
    ✅ Structure de code améliorée
    ✅ Documentation du code
    ☐ Gestion des fuites mémoire
@@ -66,7 +70,7 @@ NOTES:
 - Priorité MOYENNE = Fonctionnalités importantes mais qui dépendent des bases
 - Priorité BASSE = Peut être fait en dernier
 
-PROGRESSION ACTUELLE : ~45%
+PROGRESSION ACTUELLE : ~70%
 - ✅ Parsing basique des commandes
 - ✅ Gestion des quotes simples/doubles
 - ✅ Historique des commandes
@@ -76,8 +80,13 @@ PROGRESSION ACTUELLE : ~45%
 - ✅ Structure de base pour l'exécution
 - ✅ Structure de code améliorée avec documentation
 - ✅ Gestion des variables d'environnement de base
+- ✅ Built-in export complet et optimisé
+- ✅ Gestion basique des processus avec wait
+- ✅ Tous les built-ins implémentés (echo, pwd, env, cd, exit, export, unset)
 
 PROCHAINES PRIORITÉS :
-1. Implémenter les built-ins de base (echo, pwd, env)
-2. Finaliser la gestion des heredocs
-3. Implémenter la gestion des pipes multiples
+1. Finaliser la gestion des heredocs et redirections
+2. Implémenter la gestion des pipes multiples
+3. Gestion des codes de retour ($?)
+4. Gestion des signaux (ctrl-C, ctrl-D, ctrl-\)
+5. Tests exhaustifs et gestion des cas limites

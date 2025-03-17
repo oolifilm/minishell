@@ -18,14 +18,36 @@ char	**create_argv_from_input(t_token_list *tokens)
 	int		argc;
 	t_token	*tmp;
 
-	argv = malloc(sizeof(char *) * (tokens->size + 1));
+	// Allouer un élément de plus pour argv[0] qui sera le nom de la commande
+	argv = malloc(sizeof(char *) * (tokens->size + 2));
 	if (!argv)
 		return (NULL);
-	tmp = tokens->head;
-	argc = 0;
+
+	// Initialiser argv[0] avec le nom de la commande
+	argv[0] = ft_strdup(tokens->head->input);
+	if (!argv[0])
+	{
+		free(argv);
+		return (NULL);
+	}
+
+	// Copier les arguments à partir de argv[1]
+	tmp = tokens->head->next;
+	argc = 1;
 	while (tmp)
 	{
-		argv[argc++] = ft_strdup(tmp->input);
+		if (tmp->input)
+		{
+			argv[argc] = ft_strdup(tmp->input);
+			if (!argv[argc])
+			{
+				while (--argc >= 0)
+					free(argv[argc]);
+				free(argv);
+				return (NULL);
+			}
+			argc++;
+		}
 		tmp = tmp->next;
 	}
 	argv[argc] = NULL;
@@ -101,8 +123,12 @@ int	main(void)
 			tmp = tmp->next;
 		}
 		args = create_argv_from_input(tokens_list);
-		if (ft_strcmp(input, "export") == 0)
+		tmp = tokens_list->head;
+		if (tmp && tmp->type == COMMAND && ft_strcmp(tmp->input, "export") == 0)
+		{
+			fprintf(stderr, "DEBUG: Calling ft_export with args\n");
 			ft_export(args);
+		}
 		handle_command(tokens_list);
 		ft_unset_is_command(tokens_list);
 		ft_echo_is_command(tokens_list);
