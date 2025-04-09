@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: julien <julien@student.42.fr>              +#+  +:+       +#+         #
+#    By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:08:51 by leaugust          #+#    #+#              #
-#    Updated: 2025/03/17 11:14:03 by julien           ###   ########.fr        #
+#    Updated: 2025/04/09 11:05:27 by jbanchon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC			=	srcs/parsing/tokenizer/tokenizer.c \
 				srcs/builtins/ft_unset.c \
 				srcs/builtins/export/ft_export_utils.c \
 				srcs/builtins/export/ft_export_print.c \
+				srcs/parsing/signals/signals.c \
 				srcs/main.c 
 
 OBJ 		= 	$(SRC:.c=.o)

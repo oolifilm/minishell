@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/03/13 10:44:43 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/09 12:03:41 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,15 @@ char	**create_argv_from_input(t_token_list *tokens)
 	int		argc;
 	t_token	*tmp;
 
-	// Allouer un élément de plus pour argv[0] qui sera le nom de la commande
 	argv = malloc(sizeof(char *) * (tokens->size + 2));
 	if (!argv)
 		return (NULL);
-
-	// Initialiser argv[0] avec le nom de la commande
 	argv[0] = ft_strdup(tokens->head->input);
 	if (!argv[0])
 	{
 		free(argv);
 		return (NULL);
 	}
-
-	// Copier les arguments à partir de argv[1]
 	tmp = tokens->head->next;
 	argc = 1;
 	while (tmp)
@@ -87,22 +82,18 @@ int	main(void)
 	t_token_list	*tokens_list;
 	char			**args;
 
+	set_sig_action();
 	while (1)
 	{
-		prompt = "\033[1;38;5;206mminishell$>\033[0m ";
+		prompt = "minishell$> ";
 		input = readline(prompt);
-		if (!input)
-		{
-			printf("[DEBUG] EOF detected, exiting...\n");
-			exit(0);
-		}
 		if (*input)
 		{
 			add_history(input);
 			if (ft_strcmp(input, "clear") == 0)
 				printf("\033[H\033[J");
 		}
-		// printf("%s\n", input);
+		printf("%s\n", input);
 		tokens_list = tokenize_input(input);
 		if (!tokens_list)
 		{
@@ -144,6 +135,7 @@ int	main(void)
 			exec_command("ls", NULL);
 		free(input);
 		free_tokens(tokens_list);
+		continue ;
 	}
 	return (0);
 }

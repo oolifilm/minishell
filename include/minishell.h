@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/03/17 11:03:32 by julien           ###   ########.fr       */
+/*   Updated: 2025/04/09 11:03:42 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <signal.h>
 
 extern char			**environ;
 
@@ -184,9 +185,14 @@ int					ft_unset_is_command(t_token_list *tokens);
 
 /*=====BUILTIN_UTILS=====*/
 
-int	is_valid_env_var(const char *var);
-void	print_env_var(char *var);
-int	compare_vars(const void *a, const void *b);
-int	print_sorted_env(void);
+int					is_valid_env_var(const char *var);
+void				print_env_var(char *var);
+int					compare_vars(const void *a, const void *b);
+int					print_sorted_env(void);
+
+/*=====SIGNALS=====*/
+
+void				sigint_handler(int sig);
+void				set_sig_action(void);
 
 #endif
