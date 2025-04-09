@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/04/09 12:03:41 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:15:23 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	main(void)
 	{
 		prompt = "minishell$> ";
 		input = readline(prompt);
+		if (!input)
+			handle_eof();
 		if (*input)
 		{
 			add_history(input);
@@ -95,6 +97,10 @@ int	main(void)
 		}
 		printf("%s\n", input);
 		tokens_list = tokenize_input(input);
+		if (tokens_list)
+		{
+			exec_command(tokens_list->head);
+		}
 		if (!tokens_list)
 		{
 			printf("[ERROR] tokenize_input returned NULL\n");
@@ -115,24 +121,7 @@ int	main(void)
 		}
 		args = create_argv_from_input(tokens_list);
 		tmp = tokens_list->head;
-		if (tmp && tmp->type == COMMAND && ft_strcmp(tmp->input, "export") == 0)
-		{
-			fprintf(stderr, "DEBUG: Calling ft_export with args\n");
-			ft_export(args);
-		}
-		handle_command(tokens_list);
-		ft_unset_is_command(tokens_list);
-		ft_echo_is_command(tokens_list);
-		ft_env_is_command(tokens_list);
-		if (ft_strcmp(input, "exit") == 0)
-		{
-			free(input);
-			free_tokens(tokens_list);
-			clear_history();
-			ft_exit(NULL);
-		}
-		if (ft_strcmp(input, "ls") == 0)
-			exec_command("ls", NULL);
+		exec_builtin(tmp);
 		free(input);
 		free_tokens(tokens_list);
 		continue ;

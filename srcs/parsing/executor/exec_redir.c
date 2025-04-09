@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:03:39 by julien            #+#    #+#             */
-/*   Updated: 2025/03/05 15:07:18 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:38:06 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	handle_heredoc(char *delimiter)
 	while (1)
 	{
 		line = readline("> ");
+		if (line == NULL)
+			break ;
 		if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);

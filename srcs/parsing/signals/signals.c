@@ -6,12 +6,17 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:58:02 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/09 12:08:35 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:13:33 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
+void	handle_eof(void)
+{
+	write(1, "exit\n", 5);
+	exit(0);
+}
 /*
 Fonction pour gerer le signal SIGINT (Ctrl+C).
 Elle affiche un retour à la ligne et le prompt.
@@ -20,7 +25,10 @@ Elle affiche un retour à la ligne et le prompt.
 void	sigint_handler(int sig)
 {
 	(void)sig;
-	write(1, "\nminishell$> ", 14);
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 /*
@@ -35,7 +43,9 @@ void	set_sig_action(void)
 {
 	struct sigaction	act;
 
-	bzero(&act, sizeof(act));
+	ft_memset(&act, 0, sizeof(act));
 	act.sa_handler = &sigint_handler;
+	act.sa_flags = SA_RESTART;
+	signal(SIGQUIT, SIG_IGN);
 	sigaction(SIGINT, &act, NULL);
 }

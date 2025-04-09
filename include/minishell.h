@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/09 11:03:42 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:32:32 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 # include "../libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <signal.h>
 
 extern char			**environ;
 
@@ -139,7 +139,7 @@ int					has_unclosed_quote(char *input);
 
 /*======EXEC======*/
 
-void				exec_command(char *cmd, char **argv);
+void				exec_command(t_token *token);
 char				*get_path(char *cmd);
 void				ft_free_split(char **split);
 
@@ -194,5 +194,6 @@ int					print_sorted_env(void);
 
 void				sigint_handler(int sig);
 void				set_sig_action(void);
+void				handle_eof(void);
 
 #endif

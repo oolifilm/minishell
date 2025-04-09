@@ -6,7 +6,7 @@
 #    By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:08:51 by leaugust          #+#    #+#              #
-#    Updated: 2025/04/09 11:05:27 by jbanchon         ###   ########.fr        #
+#    Updated: 2025/04/09 16:16:09 by jbanchon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC			=	srcs/parsing/tokenizer/tokenizer.c \
 				srcs/builtins/ft_unset.c \
 				srcs/builtins/export/ft_export_utils.c \
 				srcs/builtins/export/ft_export_print.c \
+				srcs/builtins/cmd_is_builtin.c \
 				srcs/parsing/signals/signals.c \
 				srcs/main.c 
 
