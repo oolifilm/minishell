@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/04/09 16:15:23 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/09 21:54:46 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	main(void)
 	char			*prompt;
 	t_token			*tmp;
 	t_token_list	*tokens_list;
-	char			**args;
 
 	set_sig_action();
 	while (1)
@@ -95,33 +94,30 @@ int	main(void)
 			if (ft_strcmp(input, "clear") == 0)
 				printf("\033[H\033[J");
 		}
-		printf("%s\n", input);
 		tokens_list = tokenize_input(input);
 		if (tokens_list)
 		{
-			exec_command(tokens_list->head);
+			if (!parse_tokens(tokens_list))
+			{
+				free_tokens(tokens_list);
+				free(input);
+				continue ;
+			}
+			tmp = tokens_list->head;
+			while (tmp)
+			{
+				printf("Type: %s, Value: %s\n", get_token_type_str(tmp->type),
+					tmp->input);
+				tmp = tmp->next;
+			}
+			tmp = tokens_list->head;
+			exec_builtin(tmp, input);
 		}
-		if (!tokens_list)
+		else
 		{
 			printf("[ERROR] tokenize_input returned NULL\n");
 			continue ;
 		}
-		if (!parse_tokens(tokens_list))
-		{
-			free_tokens(tokens_list);
-			free(input);
-			continue ;
-		}
-		tmp = tokens_list->head;
-		while (tmp)
-		{
-			printf("Type: %s, Value: %s\n", get_token_type_str(tmp->type),
-				tmp->input);
-			tmp = tmp->next;
-		}
-		args = create_argv_from_input(tokens_list);
-		tmp = tokens_list->head;
-		exec_builtin(tmp);
 		free(input);
 		free_tokens(tokens_list);
 		continue ;

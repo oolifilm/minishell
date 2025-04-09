@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:31:08 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/09 14:43:26 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:52:09 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,44 @@ void	exec_command(t_token *token)
 	pid_t	parent;
 	char	*path;
 	char	**argv;
+	int		i;
+	int		arg_count;
+	t_token	*current;
 
-	argv = ft_split(token->input, ' ');
+	arg_count = 1;
+	current = token->next;
+	while (current && (current->type == STRING || current->type == ARGUMENT))
+	{
+		arg_count++;
+		current = current->next;
+	}
+	argv = malloc(sizeof(char *) * (arg_count + 1));
+	if (!argv)
+		return;
+	argv[0] = ft_strdup(token->input);
+	i = 1;
+	current = token->next;
+	while (current && i < arg_count)
+	{
+		argv[i] = ft_strdup(current->input);
+		current = current->next;
+		i++;
+	}
+	argv[i] = NULL;
 	path = get_path(argv[0]);
 	if (path == NULL)
 	{
 		perror("minishell");
-		exit(1);
+		ft_free_split(argv);
+		return;
 	}
 	parent = fork();
 	if (parent == 0)
 	{
 		execve(path, argv, environ);
 		perror("minishell");
+		free(path);
+		ft_free_split(argv);
 		exit(1);
 	}
 	else if (parent > 0)
@@ -50,8 +75,11 @@ void	exec_command(t_token *token)
 	else
 	{
 		perror("minishell");
+		free(path);
+		ft_free_split(argv);
 		exit(1);
 	}
+	free(path);
 	ft_free_split(argv);
 }
 
@@ -84,7 +112,6 @@ char	*get_path(char *cmd)
 	{
 		path_cmd = ft_strjoin(path_split[i], "/");
 		path_cmd = ft_strjoin(path_cmd, cmd);
-		//printf("Path cmd: %s\n", path_cmd);
 		if (access(path_cmd, F_OK) == 0)
 			return (ft_free_split(path_split), path_cmd);
 		free(path_cmd);

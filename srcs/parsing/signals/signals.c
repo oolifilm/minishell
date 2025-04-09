@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:58:02 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/09 15:13:33 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/09 21:43:08 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+void rl_replace_line(const char *text, int clear_undo);
 
 void	handle_eof(void)
 {

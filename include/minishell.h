@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/09 14:32:32 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/09 21:50:43 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
@@ -189,6 +189,13 @@ int					is_valid_env_var(const char *var);
 void				print_env_var(char *var);
 int					compare_vars(const void *a, const void *b);
 int					print_sorted_env(void);
+
+/*=====BUILTIN_CMD=====*/
+
+void exec_builtin(t_token *token, char *input);
+int execute_builtin_cmd(t_token *token, char *input);
+char **create_argv_from_token(t_token *token);
+int is_builtin(char *cmd);
 
 /*=====SIGNALS=====*/
 

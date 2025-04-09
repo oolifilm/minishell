@@ -3,56 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_is_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:50:01 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/09 16:38:45 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:38:03 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	exec_builtin(t_token *token)
+int is_builtin(char *cmd)
 {
-    if (token->type !=COMMAND)
-        return ;
-    if (ft_strcmp(token->input, "export") == 0)
+    if (!cmd)
+        return (0);
+    if (ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "exit") == 0 || ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "env") == 0 || ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "unset") == 0)
+        return (1);
+    return (0);
+}
+
+char **create_argv_from_token(t_token *token)
+{
+    int count;
+    char **argv;
+    t_token *cur;
+    int i;
+
+    count = 0;
+    cur = token;
+    while (cur)
     {
-        ft_export(token->next);
-        return;
+        count++;
+        cur = cur->next;
     }
-    if (ft_strcmp(token->input, "exit") == 0)
+    argv = (char **)malloc(sizeof(char *) * (count + 1));
+    if (!argv)
+        return (NULL);
+    i = 0;
+    cur = token;
+    while (cur)
+    {
+        argv[i++] = cur->input;
+        cur = cur->next;
+    }
+    argv[i] = NULL;
+    return (argv);
+}
+
+int execute_builtin_cmd(t_token *token, char *input)
+{
+    char **argv;
+
+    argv = create_argv_from_token(token);
+    if (!argv)
+        return (0);
+    if (ft_strcmp(token->input, "export")  == 0)
+        ft_export(argv);
+    else if (ft_strcmp(token->input, "exit") == 0)
     {
         free(input);
-        free_tokens(token);
         clear_history();
-        ft_exit(NULL);
-        return;
+        ft_exit(argv);
+        free(argv);
+        return (1);
     }
-    if (ft_strcmp(token->input, "echo") == 0)
+    else if (ft_strcmp(token->input, "echo") == 0)
+        ft_echo(argv);
+    else if (ft_strcmp(token->input, "env") == 0)
+        ft_env(argv);
+    else if (ft_strcmp(token->input, "cd") == 0)
+        ft_cd(argv);
+    else if (ft_strcmp(token->input, "pwd") == 0)
+        ft_pwd(argv);
+    else if (ft_strcmp(token->input, "unset") == 0)
+        ft_unset(argv);
+    else
     {
-        ft_echo_is_command(token);
-        return;
+        free(argv);
+        return (0);
     }
-    if (ft_strcmp(token->input, "env") == 0)
-    {
-        ft_env_is_command(token);
+    free(argv);
+    return (1);
+}
+
+void exec_builtin(t_token *token, char *input)
+{
+    if (token->type != COMMAND)
         return;
-    }
-    if (ft_strcmp(token->input, "cd") == 0)
-    {
-        ft_cd(token->next);
-        return;
-    }
-    if (ft_strcmp(token->input, "pwd") == 0)
-    {
-        ft_pwd();
-        return;
-    }
-    if (ft_strcmp(token->input, "unset") == 0)
-    {
-        ft_unset(token->next);
-        return;
-    }
-    exec_command(token);
+    (void)input;
+    if (is_builtin(token->input))
+        execute_builtin_cmd(token, input);
+    else
+        exec_command(token);
 }

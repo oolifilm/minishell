@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+         #
+#    By: julien <julien@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:08:51 by leaugust          #+#    #+#              #
-#    Updated: 2025/04/09 16:16:09 by jbanchon         ###   ########.fr        #
+#    Updated: 2025/04/09 21:45:15 by julien           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror 
+CFLAGS		=	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
 LIBFTDIR 	=	libft
-LDFLAGS 	=	-lreadline -L$(LIBFTDIR) -lft 
+LDFLAGS 	=	-lreadline -L$(LIBFTDIR) -lft -L/opt/homebrew/opt/readline/lib
 
 SRC			=	srcs/parsing/tokenizer/tokenizer.c \
 				srcs/parsing/tokenizer/token_utils.c \
