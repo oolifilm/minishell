@@ -1,2 +1,2 @@
 # minishell
-On est tellement cooked 
+On est tellement, mais tellement cooked 
