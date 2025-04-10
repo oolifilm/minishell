@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/11 13:14:18 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:05:13 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_token_list	*tokenize_input(char *input)
 	if (has_unclosed_quote(input))
 	{
 		printf("[ERROR] Syntax error near ' '\n");
-		return (NULL); // Retourne NULL ou gère l'erreur selon ton besoin
+		return (NULL);
 	}
 	tokens = init_token_list();
 	skip_spaces(input, &i);

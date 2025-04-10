@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/10 13:32:43 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:52:31 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -82,8 +83,7 @@ char				*expand_var_in_dquotes(char *str);
 
 /*=====HERE_DOC=====*/
 
-void				handle_heredoc(char *input, int *i, t_token **head,
-						t_token **cur);
+static int			handle_heredoc(char *delimiter);
 
 /*=====TOKEN_COMMAND=====*/
 

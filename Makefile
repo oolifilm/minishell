@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: julien <julien@student.42.fr>              +#+  +:+       +#+         #
+#    By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:08:51 by leaugust          #+#    #+#              #
-#    Updated: 2025/04/09 21:45:15 by julien           ###   ########.fr        #
+#    Updated: 2025/04/10 14:29:30 by jbanchon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC			=	srcs/parsing/tokenizer/tokenizer.c \
 				srcs/parsing/parser/parsing_utils.c \
 				srcs/parsing/parser/parsing.c \
 				srcs/parsing/executor/exec_cmd.c \
+				srcs/parsing/executor/exec_redir.c \
 				srcs/builtins/ft_cd.c \
 				srcs/builtins/ft_echo.c \
 				srcs/builtins/ft_env.c \

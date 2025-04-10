@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:31:08 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/10 12:42:31 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:28:55 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ void	exec_command(t_token *token)
 	int		i;
 	int		arg_count;
 	t_token	*current;
+	t_token	*redir_token;
 
 	arg_count = 1;
 	current = token->next;
-	while (current && (current->type == STRING || current->type == ARGUMENT))
+	while (current)
 	{
-		arg_count++;
+		if (current->type == STRING || current->type == ARGUMENT)
+			arg_count++;
 		current = current->next;
 	}
 	argv = malloc(sizeof(char *) * (arg_count + 1));
@@ -45,11 +47,14 @@ void	exec_command(t_token *token)
 	argv[0] = ft_strdup(token->input);
 	i = 1;
 	current = token->next;
-	while (current && i < arg_count)
+	while (current)
 	{
-		argv[i] = ft_strdup(current->input);
+		if (current->type == STRING || current->type == ARGUMENT)
+		{
+			argv[i] = ft_strdup(current->input);
+			i++;
+		}
 		current = current->next;
-		i++;
 	}
 	argv[i] = NULL;
 	path = get_path(argv[0]);
@@ -62,6 +67,24 @@ void	exec_command(t_token *token)
 	parent = fork();
 	if (parent == 0)
 	{
+		redir_token = token->next;
+		while (redir_token)
+		{
+			if (redir_token->type == REDIR_INPUT
+				|| redir_token->type == REDIR_OUTPUT
+				|| redir_token->type == REDIR_APPEND
+				|| redir_token->type == HEREDOC)
+			{
+				if (exec_redirection(redir_token) == -1)
+				{
+					perror("minishell");
+					free(path);
+					ft_free_split(argv);
+					exit(1);
+				}
+			}
+			redir_token = redir_token->next;
+		}
 		execve(path, argv, g_env);
 		perror("minishell");
 		free(path);
