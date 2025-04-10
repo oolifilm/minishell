@@ -6,7 +6,7 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/11 13:14:18 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:21:31 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_token_list	*tokenize_input(char *input)
 	is_first_word = 1;
 	if (has_unclosed_quote(input))
 	{
-		printf("[ERROR] Syntax error near ' '\n");
+		printf("[ERROR] Lexer found an unclosed quote.\n");
 		return (NULL); // Retourne NULL ou gère l'erreur selon ton besoin
 	}
 	tokens = init_token_list();

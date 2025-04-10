@@ -6,7 +6,7 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 23:09:13 by julien            #+#    #+#             */
-/*   Updated: 2025/03/07 16:21:51 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:21:07 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	handle_output_redir(char *input, int *i, t_token_list *tokens)
 	temp[2] = '\0';
 	if (input[*i + 1] == '>' && input[*i + 2] == '>')
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `>'\n", 2);
+		printf("[ERROR] Redirection must be followed by a valid target.\n");
 		*i = ft_strlen(input);
 		return ;
 	}
@@ -109,7 +109,7 @@ static void	handle_input_redir(char *input, int *i, t_token_list *tokens)
 	temp[2] = '\0';
 	if (input[*i + 1] == '<' && input[*i + 2] == '<')
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `<'\n", 2);
+		printf("[ERROR] Redirection must be followed by a valid target.\n");
 		*i = ft_strlen(input);
 		return ;
 	}
