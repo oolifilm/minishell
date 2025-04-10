@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_print.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:22:45 by julien            #+#    #+#             */
-/*   Updated: 2025/03/17 11:22:45 by julien           ###   ########.fr       */
+/*   Updated: 2025/04/10 12:43:00 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-extern char	**environ;
+extern char	**g_env;
 
 static void	print_env_var_with_value(char *var, char *equal_sign)
 {
@@ -55,7 +55,7 @@ static char	**create_sorted_env(void)
 	size_t	i;
 
 	env_count = 0;
-	while (environ[env_count])
+	while (g_env[env_count])
 		env_count++;
 	sorted_env = malloc(sizeof(char *) * (env_count + 1));
 	if (!sorted_env)
@@ -63,7 +63,7 @@ static char	**create_sorted_env(void)
 	i = 0;
 	while (i < env_count)
 	{
-		sorted_env[i] = environ[i];
+		sorted_env[i] = g_env[i];
 		i++;
 	}
 	sorted_env[env_count] = NULL;

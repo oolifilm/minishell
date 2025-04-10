@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:46:45 by julien            #+#    #+#             */
-/*   Updated: 2025/03/17 11:03:22 by julien           ###   ########.fr       */
+/*   Updated: 2025/04/10 13:43:20 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-extern char	**environ;
 
 int	is_valid_env_var(const char *var)
 {
@@ -56,4 +54,33 @@ int	compare_vars(const void *a, const void *b)
 	if (len1 < len2)
 		return (ft_strncmp(var1, var2, len1));
 	return (ft_strncmp(var1, var2, len2));
+}
+
+char	**init_env(char **envp)
+{
+	size_t	count;
+	char	**new_env;
+	size_t	i;
+
+	count = 0;
+	while (envp[count])
+		count++;
+	new_env = malloc(sizeof(char *) * (count + 1));
+	if (!new_env)
+		return (NULL);
+	i = 0;
+	while (i < count)
+	{
+		new_env[i] = ft_strdup(envp[i]);
+		if (!new_env[i])
+		{
+			while (i > 0)
+				free(new_env[--i]);
+			free(new_env);
+			return (NULL);
+		}
+		i++;
+	}
+	new_env[count] = NULL;
+	return (new_env);
 }

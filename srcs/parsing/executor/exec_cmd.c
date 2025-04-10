@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:31:08 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/09 22:52:09 by julien           ###   ########.fr       */
+/*   Updated: 2025/04/10 12:42:31 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
+extern char	**g_env;
 /*
 Fonction qui execute une commande.
 Elle prend en parametre le nom de la commande.
@@ -40,7 +41,7 @@ void	exec_command(t_token *token)
 	}
 	argv = malloc(sizeof(char *) * (arg_count + 1));
 	if (!argv)
-		return;
+		return ;
 	argv[0] = ft_strdup(token->input);
 	i = 1;
 	current = token->next;
@@ -56,12 +57,12 @@ void	exec_command(t_token *token)
 	{
 		perror("minishell");
 		ft_free_split(argv);
-		return;
+		return ;
 	}
 	parent = fork();
 	if (parent == 0)
 	{
-		execve(path, argv, environ);
+		execve(path, argv, g_env);
 		perror("minishell");
 		free(path);
 		ft_free_split(argv);

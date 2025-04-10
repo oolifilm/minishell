@@ -3,124 +3,136 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:14 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/17 11:02:14 by julien           ###   ########.fr       */
+/*   Updated: 2025/04/10 13:58:15 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-extern char	**environ;
+extern char		**g_env;
 
-static int	replace_var(const char *var, size_t var_len)
+
+static size_t	count_env(void)
 {
 	size_t	i;
 
 	i = 0;
-	while (environ[i])
-	{
-		if (ft_strncmp(environ[i], var, var_len) == 0
-			&& environ[i][var_len] == '=')
-		{
-			free(environ[i]);
-			environ[i] = ft_strdup(var);
-			if (!environ[i])
-				return (1);
-			return (0);
-		}
+	while (g_env[i])
 		i++;
-	}
-	return (-1);
+	return (i);
 }
 
-static char	**create_env_copy(size_t size)
+static void	free_env_arr(char **env, size_t n)
 {
-	char	**new_env;
 	size_t	i;
 
-	new_env = malloc(sizeof(char *) * (size + 1));
-	if (!new_env)
-		return (NULL);
 	i = 0;
-	while (i < size)
+	while (i < n)
 	{
-		new_env[i] = ft_strdup(environ[i]);
+		free(env[i]);
+		i++;
+	}
+	free(env);
+}
+
+static int	copy_env(char **new_env, size_t env_count)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < env_count)
+	{
+		new_env[i] = ft_strdup(g_env[i]);
 		if (!new_env[i])
 		{
-			while (i > 0)
-				free(new_env[--i]);
-			free(new_env);
-			return (NULL);
+			free_env_arr(new_env, i);
+			return (1);
 		}
 		i++;
 	}
-	new_env[size] = NULL;
-	return (new_env);
+	return (0);
 }
 
 static int	add_var(const char *var)
 {
 	char	**new_env;
 	size_t	env_count;
-	size_t	i;
-
-	env_count = 0;
-	while (environ[env_count])
-		env_count++;
-	new_env = create_env_copy(env_count);
+	
+	env_count = count_env();
+	new_env = malloc(sizeof(char *) * (env_count + 2));
 	if (!new_env)
+	return (1);
+if (copy_env(new_env, env_count))
 		return (1);
 	new_env[env_count] = ft_strdup(var);
 	if (!new_env[env_count])
 	{
-		i = 0;
-		while (i < env_count)
-			free(new_env[i++]);
-		free(new_env);
+		free_env_arr(new_env, env_count);
 		return (1);
 	}
 	new_env[env_count + 1] = NULL;
-	environ = new_env;
+	g_env = new_env;
 	return (0);
 }
 
-static int	process_var(const char *var)
-{
-	char	*equal_sign;
-	size_t	var_len;
-
-	if (!is_valid_env_var(var))
+	static int	replace_var(const char *var, size_t var_len)
 	{
-		write(2, "export: '", 9);
-		write(2, var, ft_strlen(var));
-		write(2, "': not a valid identifier\n", 25);
-		return (1);
+		size_t	i;
+	
+		i = 0;
+		while (g_env[i])
+		{
+			if (ft_strncmp(g_env[i], var, var_len) == 0 && g_env[i][var_len] == '=')
+			{
+				free(g_env[i]);
+				g_env[i] = ft_strdup(var);
+				if (!g_env[i])
+					return (1);
+				return (0);
+			}
+			i++;
+		}
+		return (-1);
 	}
-	equal_sign = ft_strchr(var, '=');
-	if (!equal_sign)
-		return (0);
-	var_len = equal_sign - var;
-	if (replace_var(var, var_len) != -1)
-		return (0);
-	return (add_var(var));
-}
-
-int	ft_export(char **argv)
-{
-	size_t	i;
-
-	if (!argv || !argv[0])
-		return (1);
-	if (!argv[1])
-		return (print_sorted_env());
-	i = 1;
-	while (argv[i])
+	
+	static int	process_var(const char *var)
 	{
-		if (process_var(argv[i]) != 0)
+		char	*equal_sign;
+		size_t	var_len;
+	
+		if (!is_valid_env_var(var))
+		{
+			write(2, "export: '", 9);
+			write(2, var, ft_strlen(var));
+			write(2, "': not a valid identifier\n", 25);
 			return (1);
-		i++;
+		}
+		equal_sign = ft_strchr(var, '=');
+		if (!equal_sign)
+			return (0);
+		var_len = equal_sign - var;
+		if (replace_var(var, var_len) != -1)
+			return (0);
+		return (add_var(var));
 	}
-	return (0);
-}
+	
+	int	ft_export(char **argv)
+	{
+		size_t	i;
+	
+		if (!argv || !argv[0])
+			return (1);
+		if (!argv[1])
+			return (print_sorted_env());
+		i = 1;
+		while (argv[i])
+		{
+			if (process_var(argv[i]) != 0)
+				return (1);
+			i++;
+		}
+		return (0);
+	}

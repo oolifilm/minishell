@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:27:16 by leaugust          #+#    #+#             */
-/*   Updated: 2025/03/10 16:55:24 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:58:36 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,5 @@ int	parse_tokens(t_token_list *tokens)
 		return (0);
 	if (has_invalid_redirection(tokens->head))
 		return (0);
-	//	if (has_unclosed_quotes(tokens->head))
-	//		return (0);
 	return (1);
 }

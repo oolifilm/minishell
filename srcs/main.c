@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/04/09 21:54:46 by julien           ###   ########.fr       */
+/*   Updated: 2025/04/10 13:29:56 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+char	**g_env;
 
 char	**create_argv_from_input(t_token_list *tokens)
 {
@@ -74,14 +76,17 @@ Boucle principale du shell, qui lit l'entrée utilisateur,
 8. Retourne 0 en fin d'exécution.
 */
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
+	(void)argc;
+	(void)argv;
 	char			*input;
 	char			*prompt;
 	t_token			*tmp;
 	t_token_list	*tokens_list;
 
 	set_sig_action();
+	g_env = init_env(envp);
 	while (1)
 	{
 		prompt = "minishell$> ";
