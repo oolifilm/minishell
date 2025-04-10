@@ -6,22 +6,28 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:31:08 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/10 14:28:55 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:25:18 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
 extern char	**g_env;
-/*
-Fonction qui execute une commande.
-Elle prend en parametre le nom de la commande.
-======
-On va chercher le PATH de la commande avec la fonction get_path.
-On a un processus parent qui fork un processus enfant.
-Le processus enfant va executer la commande.
-Tandis que le processus parent attend la fin de l'execution de la commande.
-*/
+
+int	has_redirection(t_token *token)
+{
+	t_token	*cur;
+
+	cur = token;
+	while (cur)
+	{
+		if (cur->type == REDIR_INPUT || cur->type == REDIR_OUTPUT
+			|| cur->type == REDIR_APPEND || cur->type == HEREDOC)
+			return (1);
+		cur = cur->next;
+	}
+	return (0);
+}
 
 void	exec_command(t_token *token)
 {

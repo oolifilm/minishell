@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/03/12 14:43:46 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:07:08 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,9 +157,7 @@ int	handle_command(t_token_list *tokens)
 			ft_cd(args);
 		}
 		else if (ft_strcmp(tmp->input, "pwd") == 0)
-		{
 			ft_pwd(NULL);
-		}
 	}
 	return (0);
 }

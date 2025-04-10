@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/10 14:52:31 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:46:46 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,6 @@ typedef struct s_cmd
 
 char				*expand_var_in_dquotes(char *str);
 
-/*=====HERE_DOC=====*/
-
-static int			handle_heredoc(char *delimiter);
-
 /*=====TOKEN_COMMAND=====*/
 
 void				token_is_command(char *input, int *i, t_token_list *tokens,
@@ -140,6 +136,7 @@ int					has_unclosed_quote(char *input);
 void				exec_command(t_token *token);
 char				*get_path(char *cmd);
 void				ft_free_split(char **split);
+int					has_redirection(t_token *token);
 
 /*======REDIR EXEC======*/
 

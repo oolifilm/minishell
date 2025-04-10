@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:50:01 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/10 12:25:35 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:50:44 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,33 @@ int	is_builtin(char *cmd)
 char	**create_argv_from_token(t_token *token)
 {
 	int		count;
-	char	**argv;
 	t_token	*cur;
 	int		i;
+	char	**argv;
 
-	count = 0;
 	cur = token;
+	count = 0;
 	while (cur)
 	{
-		count++;
+		if (cur->type != REDIR_INPUT && cur->type != REDIR_OUTPUT
+			&& cur->type != REDIR_APPEND && cur->type != HEREDOC
+			&& cur->type != REDIR_FILE)
+			count++;
 		cur = cur->next;
 	}
-	argv = (char **)malloc(sizeof(char *) * (count + 1));
+	argv = malloc(sizeof(char *) * (count + 1));
 	if (!argv)
 		return (NULL);
 	i = 0;
 	cur = token;
 	while (cur)
 	{
-		argv[i++] = cur->input;
+		if (cur->type != REDIR_INPUT && cur->type != REDIR_OUTPUT
+			&& cur->type != REDIR_APPEND && cur->type != HEREDOC
+			&& cur->type != REDIR_FILE)
+		{
+			argv[i++] = ft_strdup(cur->input);
+		}
 		cur = cur->next;
 	}
 	argv[i] = NULL;
@@ -90,11 +98,45 @@ int	execute_builtin_cmd(t_token *token, char *input)
 
 void	exec_builtin(t_token *token, char *input)
 {
+	pid_t	pid;
+	t_token	*redir_token;
+
 	if (token->type != COMMAND)
 		return ;
-	(void)input;
 	if (is_builtin(token->input))
-		execute_builtin_cmd(token, input);
+	{
+		if (has_redirection(token))
+		{
+			pid = fork();
+			if (pid == 0)
+			{
+				redir_token = token->next;
+				while (redir_token)
+				{
+					if (redir_token->type == REDIR_INPUT
+						|| redir_token->type == REDIR_OUTPUT
+						|| redir_token->type == REDIR_APPEND
+						|| redir_token->type == HEREDOC)
+					{
+						if (exec_redirection(redir_token) == -1)
+						{
+							perror("minishell");
+							exit(1);
+						}
+					}
+					redir_token = redir_token->next;
+				}
+                execute_builtin_cmd(token, input);
+                exit(0);
+			}
+			else if (pid > 0)
+				waitpid(pid, NULL, 0);
+			else
+				perror("minishell");
+		}
+		else
+			execute_builtin_cmd(token, input);
+	}
 	else
 		exec_command(token);
 }
