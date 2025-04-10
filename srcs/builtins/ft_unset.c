@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:16 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/10 13:32:06 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:36:19 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	remove_env_var(char *var)
 	while (g_env[i])
 	{
 		if (ft_strncmp(g_env[i], var, ft_strlen(var)) == 0
-				&& g_env[i][ft_strlen(var)] == '=')
+			&& g_env[i][ft_strlen(var)] == '=')
 		{
 			i++;
 			continue ;

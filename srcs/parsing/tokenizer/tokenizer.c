@@ -3,27 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/10 14:05:13 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:45:15 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-/*
-__Fonctionnement :__
-
-Initialise une nouvelle liste chaînée de tokens (t_token_list).
-
-1. Alloue dynamiquement une structure t_token_list.
-2. Vérifie si l'allocation a échoué et retourne NULL en cas d'échec.
-3. Initialise les pointeurs :
-   - head à NULL (début de la liste vide).
-   - cur à NULL (aucun token actuel).
-4. Retourne le pointeur vers la liste nouvellement créée.
-*/
+/* Initialise une nouvelle liste chaînée
+de tokens (t_token_list). */
 
 t_token_list	*init_token_list(void)
 {
@@ -37,51 +27,52 @@ t_token_list	*init_token_list(void)
 	return (tokens);
 }
 
-/*
-__Fonctionnement :__
+/* Analyse la chaîne de caractères input et la
+transforme en une liste chaînée de tokens (t_token_list).*/
 
-Analyse la chaîne de caractères input et la transforme en une liste chaînée de tokens (t_token_list).
+static int	init_tokenizer(char *input, t_token_list **tokens, int *i)
+{
+	if (has_unclosed_quote(input))
+	{
+		printf("[ERROR] Lexer found an unclosed quote.\n");
+		return (0);
+	}
+	*tokens = init_token_list();
+	*i = 0;
+	skip_spaces(input, i);
+	return (1);
+}
 
-1. Ignore les espaces initiaux.
-2. Parcourt l'entrée caractère par caractère pour identifier et traiter les différents types de tokens :
-   - Variables : $
-   - Pipes : |
-   - Redirections : < ou >
-   - Contenu entre guillemets : " " ou ' '
-3. Détecte les commandes et gère leur position dans la ligne de commande (is_first_word).
-4. Utilise init_token_list() pour initialiser la liste des tokens.
-5. Retourne la liste chaînée contenant les tokens extraits.
-*/
+static void	process_tokens(char *input, t_token_list *tokens, int *i,
+		int *is_first_word)
+{
+	size_t	len;
+
+	len = ft_strlen(input);
+	while (*i < (int)len)
+	{
+		assign_dollar(input[*i], tokens);
+		assign_pipe(input[*i], tokens);
+		assign_redirection(input, i, tokens);
+		if (input[*i] == '\'' || input[*i] == '"')
+			handle_quoted_content(input, i, tokens, input[*i]);
+		else
+		{
+			token_is_command(input, i, tokens, is_first_word);
+			(*i)++;
+		}
+	}
+}
 
 t_token_list	*tokenize_input(char *input)
 {
-	int				i;
 	t_token_list	*tokens;
+	int				i;
 	int				is_first_word;
-	size_t			len;
 
-	len = ft_strlen(input);
-	i = 0;
 	is_first_word = 1;
-	if (has_unclosed_quote(input))
-	{
-		printf("[ERROR] Syntax error near ' '\n");
+	if (!init_tokenizer(input, &tokens, &i))
 		return (NULL);
-	}
-	tokens = init_token_list();
-	skip_spaces(input, &i);
-	while (i < (int)len)
-	{
-		assign_dollar(input[i], tokens);
-		assign_pipe(input[i], tokens);
-		assign_redirection(input, &i, tokens);
-		if (input[i] == '\'' || input[i] == '"')
-			handle_quoted_content(input, &i, tokens, input[i]);
-		else
-		{
-			token_is_command(input, &i, tokens, &is_first_word);
-			i++;
-		}
-	}
+	process_tokens(input, tokens, &i, &is_first_word);
 	return (tokens);
 }

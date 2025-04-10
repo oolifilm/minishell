@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/10 16:46:46 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:25:22 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,16 @@
 
 typedef enum e_token_type
 {
-	COMMAND,
-	ARGUMENT,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE,
-	REDIR_INPUT,
-	REDIR_OUTPUT,
-	REDIR_APPEND,
+	CMD,
+	ARG,
+	REDIR_IN,
+	REDIR_OUT,
+	APPEND,
 	HEREDOC,
 	PIPE,
 	DOLLAR,
-	EXIT_STATUS,
-	ENV_VAR,
+	EXIT,
+	ENV,
 	STRING,
 	REDIR_FILE,
 }					t_token_type;
@@ -79,9 +77,10 @@ typedef struct s_cmd
 
 /*=====DOUBLE_QUOTED=====*/
 
+int					get_env_var_name(char *input, int j, char *var_name);
 char				*expand_var_in_dquotes(char *str);
 
-/*=====TOKEN_COMMAND=====*/
+/*=====TOKEN_CMD=====*/
 
 void				token_is_command(char *input, int *i, t_token_list *tokens,
 						int *is_first_word);
@@ -124,7 +123,6 @@ int					parse_tokens(t_token_list *tokens);
 int					is_invalid_first_token(t_token *head);
 int					has_consecutive_pipes(t_token *tokens);
 int					has_invalid_redirection(t_token *tokens);
-// int					has_unclosed_quotes(t_token *tokens);
 int					has_unclosed_quote(char *input);
 
 /***************************/

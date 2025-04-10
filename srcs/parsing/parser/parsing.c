@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:27:16 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/10 11:58:36 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:36:13 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 int	is_invalid_first_token(t_token *head)
 {
 	if (!head)
-		return (printf("[ERROR] No tokens found\n"), 1);
-	if (head->type == PIPE || head->type == REDIR_INPUT
-		|| head->type == REDIR_OUTPUT || head->type == REDIR_APPEND
-		|| head->type == HEREDOC)
+		return (printf("[ERROR] Token list is NULL.\n"), 1);
+	if (head->type == PIPE || head->type == REDIR_IN || head->type == REDIR_OUT
+		|| head->type == APPEND || head->type == HEREDOC)
 	{
-		printf("[ERROR] Syntax error near '%s'\n", head->input);
+		printf("[ERROR] First word must be an argument.\n");
 		return (1);
 	}
 	return (0);
@@ -34,7 +33,7 @@ int	has_consecutive_pipes(t_token *tokens)
 		{
 			if (!tokens->next || tokens->next->type == PIPE)
 			{
-				printf("[ERROR] Syntax error near '|'\n");
+				printf("[ERROR] Lexer found two consecutive pipes.\n");
 				return (1);
 			}
 		}
@@ -47,14 +46,14 @@ int	has_invalid_redirection(t_token *tokens)
 {
 	while (tokens)
 	{
-		if (tokens->type == REDIR_INPUT || tokens->type == REDIR_OUTPUT
-			|| tokens->type == REDIR_APPEND || tokens->type == HEREDOC)
+		if (tokens->type == REDIR_IN || tokens->type == REDIR_OUT
+			|| tokens->type == APPEND || tokens->type == HEREDOC)
 		{
 			if (!tokens->next || (tokens->next->type != REDIR_FILE
 					&& tokens->next->type != STRING
-					&& tokens->next->type != ENV_VAR))
+					&& tokens->next->type != ENV))
 			{
-				printf("[ERROR] Syntax error near '%s'\n", tokens->input);
+				printf("[ERROR] Redirection must be followed by a target.\n");
 				return (1);
 			}
 		}
@@ -88,7 +87,7 @@ int	has_unclosed_quote(char *input)
 int	parse_tokens(t_token_list *tokens)
 {
 	if (!tokens || !tokens->head)
-		return (printf("[ERROR] Empty token list\n"), 0);
+		return (printf("[ERROR] Token list is NULL.\n"), 0);
 	if (is_invalid_first_token(tokens->head))
 		return (0);
 	if (has_consecutive_pipes(tokens->head))

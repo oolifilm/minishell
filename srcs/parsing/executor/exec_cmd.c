@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:31:08 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/10 16:25:18 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:38:41 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	has_redirection(t_token *token)
 	cur = token;
 	while (cur)
 	{
-		if (cur->type == REDIR_INPUT || cur->type == REDIR_OUTPUT
-			|| cur->type == REDIR_APPEND || cur->type == HEREDOC)
+		if (cur->type == REDIR_IN || cur->type == REDIR_OUT
+			|| cur->type == APPEND || cur->type == HEREDOC)
 			return (1);
 		cur = cur->next;
 	}
@@ -43,7 +43,7 @@ void	exec_command(t_token *token)
 	current = token->next;
 	while (current)
 	{
-		if (current->type == STRING || current->type == ARGUMENT)
+		if (current->type == STRING || current->type == ARG)
 			arg_count++;
 		current = current->next;
 	}
@@ -55,7 +55,7 @@ void	exec_command(t_token *token)
 	current = token->next;
 	while (current)
 	{
-		if (current->type == STRING || current->type == ARGUMENT)
+		if (current->type == STRING || current->type == ARG)
 		{
 			argv[i] = ft_strdup(current->input);
 			i++;
@@ -76,10 +76,8 @@ void	exec_command(t_token *token)
 		redir_token = token->next;
 		while (redir_token)
 		{
-			if (redir_token->type == REDIR_INPUT
-				|| redir_token->type == REDIR_OUTPUT
-				|| redir_token->type == REDIR_APPEND
-				|| redir_token->type == HEREDOC)
+			if (redir_token->type == REDIR_IN || redir_token->type == REDIR_OUT
+				|| redir_token->type == APPEND || redir_token->type == HEREDOC)
 			{
 				if (exec_redirection(redir_token) == -1)
 				{

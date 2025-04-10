@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:16:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/10 15:07:08 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:27:26 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int	handle_command(t_token_list *tokens)
 	args[1] = NULL;
 	args[2] = NULL;
 	tmp = tokens->head;
-	if (tmp && tmp->type == COMMAND)
+	if (tmp && tmp->type == CMD)
 	{
 		if (ft_strcmp(tmp->input, "cd") == 0)
 		{

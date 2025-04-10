@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_is_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:50:01 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/10 16:50:44 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:37:55 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ char	**create_argv_from_token(t_token *token)
 	count = 0;
 	while (cur)
 	{
-		if (cur->type != REDIR_INPUT && cur->type != REDIR_OUTPUT
-			&& cur->type != REDIR_APPEND && cur->type != HEREDOC
+		if (cur->type != REDIR_IN && cur->type != REDIR_OUT
+			&& cur->type != APPEND && cur->type != HEREDOC
 			&& cur->type != REDIR_FILE)
 			count++;
 		cur = cur->next;
@@ -48,8 +48,8 @@ char	**create_argv_from_token(t_token *token)
 	cur = token;
 	while (cur)
 	{
-		if (cur->type != REDIR_INPUT && cur->type != REDIR_OUTPUT
-			&& cur->type != REDIR_APPEND && cur->type != HEREDOC
+		if (cur->type != REDIR_IN && cur->type != REDIR_OUT
+			&& cur->type != APPEND && cur->type != HEREDOC
 			&& cur->type != REDIR_FILE)
 		{
 			argv[i++] = ft_strdup(cur->input);
@@ -101,7 +101,7 @@ void	exec_builtin(t_token *token, char *input)
 	pid_t	pid;
 	t_token	*redir_token;
 
-	if (token->type != COMMAND)
+	if (token->type != CMD)
 		return ;
 	if (is_builtin(token->input))
 	{
@@ -113,9 +113,9 @@ void	exec_builtin(t_token *token, char *input)
 				redir_token = token->next;
 				while (redir_token)
 				{
-					if (redir_token->type == REDIR_INPUT
-						|| redir_token->type == REDIR_OUTPUT
-						|| redir_token->type == REDIR_APPEND
+					if (redir_token->type == REDIR_IN
+						|| redir_token->type == REDIR_OUT
+						|| redir_token->type == APPEND
 						|| redir_token->type == HEREDOC)
 					{
 						if (exec_redirection(redir_token) == -1)
@@ -126,8 +126,8 @@ void	exec_builtin(t_token *token, char *input)
 					}
 					redir_token = redir_token->next;
 				}
-                execute_builtin_cmd(token, input);
-                exit(0);
+				execute_builtin_cmd(token, input);
+				exit(0);
 			}
 			else if (pid > 0)
 				waitpid(pid, NULL, 0);
