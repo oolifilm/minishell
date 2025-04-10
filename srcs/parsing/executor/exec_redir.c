@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 10:03:39 by julien            #+#    #+#             */
-/*   Updated: 2025/04/09 15:38:06 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:15:15 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ int	exec_redirection(t_token *token)
 {
 	if (!token || !token->next || !token->next->input)
 		return (-1);
-	if (token->type == REDIR_INPUT)
+	if (token->type == REDIR_IN)
 		return (handle_input_redir(token->next->input));
-	else if (token->type == REDIR_OUTPUT)
+	else if (token->type == REDIR_OUT)
 		return (handle_output_redir(token->next->input, 0));
-	else if (token->type == REDIR_APPEND)
+	else if (token->type == APPEND)
 		return (handle_output_redir(token->next->input, 1));
 	else if (token->type == HEREDOC)
 		return (handle_heredoc(token->next->input));

@@ -6,7 +6,7 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:27:16 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/10 14:19:58 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:24:20 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ int	is_invalid_first_token(t_token *head)
 {
 	if (!head)
 		return (printf("[ERROR] Token list is NULL.\n"), 1);
-	if (head->type == PIPE || head->type == REDIR_INPUT
-		|| head->type == REDIR_OUTPUT || head->type == REDIR_APPEND
-		|| head->type == HEREDOC)
+	if (head->type == PIPE || head->type == REDIR_IN || head->type == REDIR_OUT
+		|| head->type == APPEND || head->type == HEREDOC)
 	{
-		printf("[ERROR] First word must be an argument.\n", head->input);
+		printf("[ERROR] First word must be an argument.\n");
 		return (1);
 	}
 	return (0);
@@ -32,11 +31,16 @@ int	has_consecutive_pipes(t_token *tokens)
 	{
 		if (tokens->type == PIPE)
 		{
-			if (!tokens->next || tokens->next->type == PIPE)
-			{
-				printf("[ERROR] Parser found two consecutive pipes.\n");
-				return (1);
-			}
+			if (!tokens->next)
+				{
+					printf("[ERROR] Pipe must be followed by a command.\n");
+					return (1);
+				}
+			else if (tokens->next->type == PIPE)
+				{
+					printf("[ERROR] Parser found two consecutive pipes.\n");
+					return(1);
+				}
 		}
 		tokens = tokens->next;
 	}
@@ -47,12 +51,12 @@ int	has_invalid_redirection(t_token *tokens)
 {
 	while (tokens)
 	{
-		if (tokens->type == REDIR_INPUT || tokens->type == REDIR_OUTPUT
-			|| tokens->type == REDIR_APPEND || tokens->type == HEREDOC)
+		if (tokens->type == REDIR_IN || tokens->type == REDIR_OUT
+			|| tokens->type == APPEND || tokens->type == HEREDOC)
 		{
-			if (!tokens->next || (tokens->next->type != REDIR_FILE
+			if (!tokens->next || (tokens->next->type != TARGET
 					&& tokens->next->type != STRING
-					&& tokens->next->type != ENV_VAR))
+					&& tokens->next->type != ENV))
 			{
 				printf("[ERROR] Redirection must be followed by a target.\n");
 				return (1);

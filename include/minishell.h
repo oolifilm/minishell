@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/10 13:32:43 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:15:58 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,16 @@ typedef enum e_token_type
 {
 	COMMAND,
 	ARGUMENT,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE,
-	REDIR_INPUT,
-	REDIR_OUTPUT,
-	REDIR_APPEND,
+	REDIR_IN,
+	REDIR_OUT,
+	APPEND,
 	HEREDOC,
 	PIPE,
 	DOLLAR,
-	EXIT_STATUS,
-	ENV_VAR,
+	EXIT,
+	ENV,
 	STRING,
-	REDIR_FILE,
+	TARGET,
 }					t_token_type;
 
 typedef struct s_token
