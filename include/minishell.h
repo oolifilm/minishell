@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/10 18:25:22 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:09:12 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void				assign_redirection(char *input, int *i,
 /*=====TOKEN_OPERATORS=====*/
 
 void				assign_pipe(char input, t_token_list *tokens);
-void				assign_dollar(char input, t_token_list *tokens);
+void				assign_dollar(char *input, int *i, t_token_list *tokens);
 
 /*=====TOKEN_QUOTES=====*/
 
@@ -114,6 +114,9 @@ char				*get_token_type_str(t_token_type type);
 
 t_token_list		*tokenize_input(char *input);
 t_token_list		*init_token_list(void);
+
+void				expand_token_list(t_token *token);
+char				*expand_token(t_token *token);
 
 /******************************/
 /*==========PARSING==========*/

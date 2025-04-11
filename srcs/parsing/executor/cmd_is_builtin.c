@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_is_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:50:01 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/10 17:37:55 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:37:18 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
 int	is_builtin(char *cmd)
 {
@@ -105,6 +105,7 @@ void	exec_builtin(t_token *token, char *input)
 		return ;
 	if (is_builtin(token->input))
 	{
+		expand_token_list(token);
 		if (has_redirection(token))
 		{
 			pid = fork();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:31:08 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/10 17:38:41 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:03:31 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	exec_command(t_token *token)
 	current = token->next;
 	while (current)
 	{
-		if (current->type == STRING || current->type == ARG)
+		if (current->type == STRING || current->type == ARG
+			|| current->type == ENV || current->type == EXIT)
 			arg_count++;
 		current = current->next;
 	}
@@ -55,9 +56,10 @@ void	exec_command(t_token *token)
 	current = token->next;
 	while (current)
 	{
-		if (current->type == STRING || current->type == ARG)
+		if (current->type == STRING || current->type == ARG
+			|| current->type == ENV || current->type == EXIT)
 		{
-			argv[i] = ft_strdup(current->input);
+			argv[i] = expand_token(current);
 			i++;
 		}
 		current = current->next;
@@ -70,6 +72,9 @@ void	exec_command(t_token *token)
 		ft_free_split(argv);
 		return ;
 	}
+	printf("=== argv before execve ===\n");
+	for (int j = 0; argv[j]; j++)
+		printf("argv[%d] = [%s]\n", j, argv[j]);
 	parent = fork();
 	if (parent == 0)
 	{

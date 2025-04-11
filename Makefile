@@ -6,7 +6,7 @@
 #    By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:08:51 by leaugust          #+#    #+#              #
-#    Updated: 2025/04/10 14:29:30 by jbanchon         ###   ########.fr        #
+#    Updated: 2025/04/11 18:37:08 by jbanchon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC			=	srcs/parsing/tokenizer/tokenizer.c \
 				srcs/parsing/tokenizer/token_command.c \
 				srcs/parsing/tokenizer/double_quoted.c \
 				srcs/parsing/tokenizer/token_is_redir.c \
+				srcs/parsing/tokenizer/token_expand.c \
 				srcs/parsing/parser/parsing_utils.c \
 				srcs/parsing/parser/parsing.c \
 				srcs/parsing/executor/exec_cmd.c \
@@ -36,7 +37,7 @@ SRC			=	srcs/parsing/tokenizer/tokenizer.c \
 				srcs/builtins/ft_unset.c \
 				srcs/builtins/export/ft_export_utils.c \
 				srcs/builtins/export/ft_export_print.c \
-				srcs/builtins/cmd_is_builtin.c \
+				srcs/parsing/executor/cmd_is_builtin.c \
 				srcs/parsing/signals/signals.c \
 				srcs/main.c 
 

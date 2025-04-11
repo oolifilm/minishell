@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/04/10 17:37:25 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:55:35 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	main(int argc, char **argv, char **envp)
 				printf("\033[H\033[J");
 		}
 		tokens_list = tokenize_input(input);
+		
 		if (tokens_list)
 		{
 			if (!parse_tokens(tokens_list))
@@ -107,3 +108,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
+
+

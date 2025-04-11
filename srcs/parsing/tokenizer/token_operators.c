@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_operators.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:59:25 by julien            #+#    #+#             */
-/*   Updated: 2025/04/10 18:25:36 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:53:31 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,28 @@ void	assign_pipe(char input, t_token_list *tokens)
 
 /* Gère le caractère $. */
 
-void	assign_dollar(char input, t_token_list *tokens)
+void	assign_dollar(char *input, int *i, t_token_list *tokens)
 {
-	if (input == '$')
-		add_token(tokens, "$", DOLLAR);
+	char var_name[256];
+	int j;
+
+	(*i)++;
+	if (input[*i] == '?')
+	{
+		add_token(tokens, "?", EXIT);
+		(*i)++;
+		return;
+	}
+	j = 0;
+	while (input[*i] && (ft_isalnum(input[*i]) || input[*i] == '_') && j < 255)
+	{
+		var_name[j] = input[*i];
+		j++;
+		(*i)++;
+	}
+	var_name[j] = '\0';
+	if (j > 0)
+		add_token(tokens, var_name, ENV);
 }
 
 /* Extrait le nom d'une variable d'environnement à partir d'une chaîne input. */

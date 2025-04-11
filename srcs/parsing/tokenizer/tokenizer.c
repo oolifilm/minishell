@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/10 17:45:15 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:49:12 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,13 @@ static void	process_tokens(char *input, t_token_list *tokens, int *i,
 	len = ft_strlen(input);
 	while (*i < (int)len)
 	{
-		assign_dollar(input[*i], tokens);
-		assign_pipe(input[*i], tokens);
-		assign_redirection(input, i, tokens);
-		if (input[*i] == '\'' || input[*i] == '"')
+		if (input[*i] == '$')
+			assign_dollar(input, i, tokens);
+		else if (input[*i] == '|')
+			assign_pipe(input[*i], tokens);
+		else if (input[*i] == '<' || input[*i] == '>')
+			assign_redirection(input, i, tokens);
+		else if (input[*i] == '\'' || input[*i] == '"')
 			handle_quoted_content(input, i, tokens, input[*i]);
 		else
 		{
