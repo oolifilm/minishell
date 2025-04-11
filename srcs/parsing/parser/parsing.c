@@ -6,7 +6,7 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:27:16 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/10 17:36:13 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/11 19:35:45 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,25 @@ int	is_invalid_first_token(t_token *head)
 	return (0);
 }
 
-int	has_consecutive_pipes(t_token *tokens)
+int	handle_pipes(t_token *tokens)
 {
 	while (tokens)
 	{
 		if (tokens->type == PIPE)
 		{
-			if (!tokens->next || tokens->next->type == PIPE)
+			if (!tokens->next)
 			{
-				printf("[ERROR] Lexer found two consecutive pipes.\n");
+				printf("[ERROR] Pipe must be followed by a command.\n");
+				return (1);
+			}
+			else if (tokens->next->type == PIPE)
+			{
+				printf("[ERROR] Found two consecutive pipes.\n");
+				return (1);
+			}
+			else if (tokens->next->type == CMD)
+			{
+				printf("[ERROR] Command following pipe is invalid.\n");
 				return (1);
 			}
 		}

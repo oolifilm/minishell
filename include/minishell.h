@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/11 18:09:12 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/11 19:36:22 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ char				*expand_token(t_token *token);
 
 int					parse_tokens(t_token_list *tokens);
 int					is_invalid_first_token(t_token *head);
-int					has_consecutive_pipes(t_token *tokens);
 int					has_invalid_redirection(t_token *tokens);
+int					handle_pipes(t_token *tokens);
 int					has_unclosed_quote(char *input);
 
 /***************************/
