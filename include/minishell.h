@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/11 19:36:22 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/11 22:28:56 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include <stdio.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
@@ -70,6 +70,12 @@ typedef struct s_cmd
 	int				outfile;
 	struct s_cmd	*next;
 }					t_cmd;
+
+typedef struct s_shell
+{
+	char **env;
+	int last_exit_status;
+} t_shell;
 
 /********************************/
 /*==========TOKENIZER==========*/
@@ -134,14 +140,17 @@ int					has_unclosed_quote(char *input);
 
 /*======EXEC======*/
 
-void				exec_command(t_token *token);
-char				*get_path(char *cmd);
-void				ft_free_split(char **split);
-int					has_redirection(t_token *token);
-
-/*======REDIR EXEC======*/
-
-int					exec_redirection(t_token *token);
+void exec_cmd(t_shell *sh, t_token *token, char *input);
+int exec_ext_cmd(t_shell *sh, t_token *token, char **argv);
+int run_ext_child(t_shell *sh, t_token *token, char *path, char **argv);
+int handle_execve_err(char *path, char **argv);
+int exec_builtin_redirect(t_token *token, char *input);
+int handle_redirect(t_token *token);
+int **build_argv(t_token *token);
+int **fill_argv(t_token *token, char **argv);
+int has_redirect(t_token *token);
+int ft_free_split(char **tab);
+char *get_path(char *cmd);
 
 /*******************************/
 /*==========BUILTINS==========*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:27:16 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/11 19:35:45 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/11 22:17:26 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ int	parse_tokens(t_token_list *tokens)
 	if (!tokens || !tokens->head)
 		return (printf("[ERROR] Token list is NULL.\n"), 0);
 	if (is_invalid_first_token(tokens->head))
-		return (0);
-	if (has_consecutive_pipes(tokens->head))
 		return (0);
 	if (has_invalid_redirection(tokens->head))
 		return (0);
