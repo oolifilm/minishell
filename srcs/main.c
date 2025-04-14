@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:35:29 by julien            #+#    #+#             */
-/*   Updated: 2025/04/11 17:55:35 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:56:03 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,43 @@ char	**create_argv_from_input(t_token_list *tokens)
 	return (argv);
 }
 
+t_shell	*init_shell(char **envp)
+{
+	t_shell	*sh;
+	int		count;
+	int		i;
+
+	sh = malloc(sizeof(t_shell));
+	if (!sh)
+		return (NULL);
+	count = 0;
+	while (envp[count])
+		count++;
+	sh->env = malloc(sizeof(char *) * (count + 1));
+	if (!sh->env)
+	{
+		free(sh);
+		return (NULL);
+	}
+	i = 0;
+	while (i < count)
+	{
+		sh->env[i] = ft_strdup(envp[i]);
+		if (!sh->env[i])
+		{
+			while (i > 0)
+				free(sh->env[--i]);
+			free(sh->env);
+			free(sh);
+			return (NULL);
+		}
+		i++;
+	}
+	sh->env[count] = NULL;
+	sh->last_exit_status = 0;
+	return (sh);
+}
+
 /* Boucle principale du shell, qui lit l'entrée utilisateur,
 affiche un prompt et traite les commandes.*/
 
@@ -60,25 +97,22 @@ int	main(int argc, char **argv, char **envp)
 	char			*prompt;
 	t_token			*tmp;
 	t_token_list	*tokens_list;
+	t_shell			*sh;
 
 	(void)argc;
 	(void)argv;
+	sh = NULL;
 	set_sig_action();
 	g_env = init_env(envp);
+	sh = init_shell(envp);
 	while (1)
 	{
 		prompt = "minishell$> ";
 		input = readline(prompt);
 		if (!input)
 			handle_eof();
-		if (*input)
-		{
-			add_history(input);
-			if (ft_strcmp(input, "clear") == 0)
-				printf("\033[H\033[J");
-		}
+		add_history(input);
 		tokens_list = tokenize_input(input);
-		
 		if (tokens_list)
 		{
 			if (!parse_tokens(tokens_list))
@@ -95,18 +129,16 @@ int	main(int argc, char **argv, char **envp)
 				tmp = tmp->next;
 			}
 			tmp = tokens_list->head;
-			exec_builtin(tmp, input);
+			exec_cmd(sh, tmp, input);
 		}
 		else
 		{
 			printf("[ERROR] tokenize_input returned NULL\n");
+			free(input);
 			continue ;
 		}
 		free(input);
 		free_tokens(tokens_list);
-		continue ;
 	}
 	return (0);
 }
-
-

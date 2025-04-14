@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/11 22:28:56 by julien           ###   ########.fr       */
+/*   Updated: 2025/04/14 13:57:51 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include <stdio.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
@@ -73,9 +73,9 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
-	char **env;
-	int last_exit_status;
-} t_shell;
+	char			**env;
+	int				last_exit_status;
+}					t_shell;
 
 /********************************/
 /*==========TOKENIZER==========*/
@@ -140,17 +140,20 @@ int					has_unclosed_quote(char *input);
 
 /*======EXEC======*/
 
-void exec_cmd(t_shell *sh, t_token *token, char *input);
-int exec_ext_cmd(t_shell *sh, t_token *token, char **argv);
-int run_ext_child(t_shell *sh, t_token *token, char *path, char **argv);
-int handle_execve_err(char *path, char **argv);
-int exec_builtin_redirect(t_token *token, char *input);
-int handle_redirect(t_token *token);
-int **build_argv(t_token *token);
-int **fill_argv(t_token *token, char **argv);
-int has_redirect(t_token *token);
-int ft_free_split(char **tab);
-char *get_path(char *cmd);
+char				**build_argv(t_token *token);
+char				**fill_argv(t_token *token, char **argv);
+int					exec_builtin_cmd(t_token *token, char *input);
+void				exec_cmd(t_shell *sh, t_token *token, char *input);
+int					exec_ext_cmd(t_shell *sh, t_token *token, char **argv);
+int					run_ext_child(t_shell *sh, t_token *token, char *path,
+						char **argv);
+int					handle_execve_err(char *path, char **argv);
+int					exec_builtin_redirect(t_token *token, char *input);
+int					handle_redirect(t_token *token, char *input);
+int					has_redirect(t_token *token);
+int					ft_free_split(char **tab);
+int					is_builtin(char *cmd);
+char				*get_path(char *cmd);
 
 /*******************************/
 /*==========BUILTINS==========*/
@@ -195,13 +198,6 @@ int					is_valid_env_var(const char *var);
 void				print_env_var(char *var);
 int					compare_vars(const void *a, const void *b);
 int					print_sorted_env(void);
-
-/*=====BUILTIN_CMD=====*/
-
-void				exec_builtin(t_token *token, char *input);
-int					execute_builtin_cmd(t_token *token, char *input);
-char				**create_argv_from_token(t_token *token);
-int					is_builtin(char *cmd);
 
 /*=====SIGNALS=====*/
 

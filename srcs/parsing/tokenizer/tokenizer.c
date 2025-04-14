@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:05 by jbanchon          #+#    #+#             */
-/*   Updated: 2025/04/11 17:49:12 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:33:15 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ static void	process_tokens(char *input, t_token_list *tokens, int *i,
 		if (input[*i] == '$')
 			assign_dollar(input, i, tokens);
 		else if (input[*i] == '|')
+		{
 			assign_pipe(input[*i], tokens);
+			(*i)++;
+		}
 		else if (input[*i] == '<' || input[*i] == '>')
 			assign_redirection(input, i, tokens);
 		else if (input[*i] == '\'' || input[*i] == '"')
