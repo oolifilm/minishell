@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/14 13:57:51 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/14 19:59:34 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_token
 {
 	char			*input;
 	t_token_type	type;
+	int				quoted;
 	struct s_token	*next;
 }					t_token;
 
@@ -106,12 +107,15 @@ void				assign_dollar(char *input, int *i, t_token_list *tokens);
 
 void				handle_quoted_content(char *input, int *i,
 						t_token_list *tokens, char quote_type);
+int					is_token_breaker(char c);
+int					ft_isspace(char c);
+int					is_quote(char c);
 
 /*=====TOKEN_UTILS=====*/
 
-t_token				*new_token(char *input, t_token_type type);
 t_token				*add_token(t_token_list *tokens, char *input,
-						t_token_type type);
+						t_token_type type, int quoted);
+t_token				*new_token(char *input, t_token_type type, int quoted);
 void				skip_spaces(char *input, int *i);
 void				free_tokens(t_token_list *tokens_list);
 char				*get_token_type_str(t_token_type type);

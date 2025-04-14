@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:27:16 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/14 16:08:56 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/14 20:09:42 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@ int	is_invalid_first_token(t_token *head)
 {
 	if (!head)
 		return (printf("[ERROR] Token list is NULL.\n"), 1);
-	if (head->type == PIPE || head->type == REDIR_IN || head->type == REDIR_OUT
-		|| head->type == APPEND || head->type == HEREDOC)
+	if (head->type == PIPE)
 	{
-		printf("[ERROR] First word must be an argument.\n");
+		printf("[ERROR] Pipe can't be the first argument.\n");
 		return (1);
 	}
 	return (0);
@@ -29,6 +28,14 @@ int	handle_pipes(t_token *tokens)
 {
 	while (tokens)
 	{
+		if (tokens->type == STRING)
+		{
+			if (!tokens->quoted && ft_strchr(tokens->input, '|'))
+			{
+				printf("[ERROR] Pipe found in unquoted string.\n");
+				return (1);
+			}
+		}
 		if (tokens->type == PIPE)
 		{
 			if (!tokens->next)
@@ -38,13 +45,16 @@ int	handle_pipes(t_token *tokens)
 			}
 			else if (tokens->next->type == PIPE)
 			{
-				printf("[ERROR] Found two consecutive pipes.\n");
+				printf("[ERROR] Found consecutive pipes.\n");
 				return (1);
 			}
-			else if (tokens->next->type == CMD)
+			if (tokens->next->type == CMD)
 			{
-				printf("[ERROR] Command following pipe is invalid.\n");
-				return (1);
+				if (!is_builtin(tokens->next->input))
+				{
+					printf("[ERROR] Following command is not valid.\n");
+					return (1);
+				}
 			}
 		}
 		tokens = tokens->next;
