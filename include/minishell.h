@@ -6,7 +6,7 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/14 19:59:34 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:55:56 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void				handle_quoted_content(char *input, int *i,
 int					is_token_breaker(char c);
 int					ft_isspace(char c);
 int					is_quote(char c);
+void				assign_cmd_types(t_token *token);
+char				*remove_quotes(const char *s);
 
 /*=====TOKEN_UTILS=====*/
 
@@ -137,6 +139,8 @@ int					is_invalid_first_token(t_token *head);
 int					has_invalid_redirection(t_token *tokens);
 int					handle_pipes(t_token *tokens);
 int					has_unclosed_quote(char *input);
+int					is_ignorable_input(const char *line);
+int					is_ignored_char(char c);
 
 /***************************/
 /*==========EXEC==========*/

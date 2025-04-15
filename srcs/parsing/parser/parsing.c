@@ -6,7 +6,7 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:27:16 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/14 20:09:42 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:05:43 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	handle_pipes(t_token *tokens)
 			}
 			if (tokens->next->type == CMD)
 			{
-				if (!is_builtin(tokens->next->input))
+				if (!is_builtin(tokens->next->input)) //pb pour autre que builtin ex : cat -e
 				{
 					printf("[ERROR] Following command is not valid.\n");
 					return (1);
@@ -69,11 +69,23 @@ int	has_invalid_redirection(t_token *tokens)
 		if (tokens->type == REDIR_IN || tokens->type == REDIR_OUT
 			|| tokens->type == APPEND || tokens->type == HEREDOC)
 		{
-			if (!tokens->next || (tokens->next->type != REDIR_FILE
-					&& tokens->next->type != STRING
-					&& tokens->next->type != ENV))
+			if (!tokens->next)
 			{
 				printf("[ERROR] Redirection must be followed by a target.\n");
+				return (1);
+			}
+			if (tokens->next->type == REDIR_IN
+				|| tokens->next->type == REDIR_OUT
+				|| tokens->next->type == APPEND
+				|| tokens->next->type == HEREDOC)
+			{
+				printf("[ERROR] Invalid redirection: cannot chain redirection symbols.\n");
+				return (1);
+			}
+			if (tokens->next->type != REDIR_FILE && tokens->next->type != STRING
+				&& tokens->next->type != ENV)
+			{
+				printf("[ERROR] Unexpected token after redirection.\n");
 				return (1);
 			}
 		}
@@ -107,7 +119,7 @@ int	has_unclosed_quote(char *input)
 int	parse_tokens(t_token_list *tokens)
 {
 	if (!tokens || !tokens->head)
-		return (printf("[ERROR] Token list is NULL.\n"), 0);
+		return (1);
 	if (is_invalid_first_token(tokens->head))
 		return (0);
 	if (handle_pipes(tokens->head))
