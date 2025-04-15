@@ -6,7 +6,7 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:00:31 by julien            #+#    #+#             */
-/*   Updated: 2025/04/10 18:26:26 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/14 20:07:33 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,25 @@
 
 static void	handle_single_quote(char *input, int *i, t_token_list *tokens)
 {
-	char	*content;
+	char	buffer[1024];
+	int		len;
 	int		start;
 
+	len = 0;
 	(*i)++;
 	start = *i;
 	while (input[*i] && input[*i] != '\'')
 		(*i)++;
 	if (input[*i] == '\'')
 	{
-		content = ft_substr(input, start, *i - start);
-		if (content)
-		{
-			add_token(tokens, content, STRING);
-			free(content);
-		}
+		while (start < *i && len < 1023)
+			buffer[len++] = input[start++];
 		(*i)++;
+		while (input[*i] && !ft_isspace(input[*i])
+			&& !is_token_breaker(input[*i]) && len < 1023)
+			buffer[len++] = input[(*i)++];
+		buffer[len] = '\0';
+		add_token(tokens, ft_strdup(buffer), STRING, 1);
 	}
 }
 
@@ -39,10 +42,13 @@ static void	handle_single_quote(char *input, int *i, t_token_list *tokens)
 
 static void	handle_double_quotes(char *input, int *i, t_token_list *tokens)
 {
+	char	buffer[1024];
+	int		len;
+	int		start;
 	char	*content;
 	char	*expanded;
-	int		start;
 
+	len = 0;
 	(*i)++;
 	start = *i;
 	while (input[*i] && input[*i] != '"')
@@ -53,14 +59,20 @@ static void	handle_double_quotes(char *input, int *i, t_token_list *tokens)
 		if (content)
 		{
 			expanded = expand_var_in_dquotes(content);
+			free(content);
 			if (expanded)
 			{
-				add_token(tokens, expanded, STRING);
+				ft_strlcpy(buffer, expanded, sizeof(buffer));
+				len = ft_strlen(buffer);
 				free(expanded);
+				(*i)++;
+				while (input[*i] && !ft_isspace(input[*i])
+					&& !is_token_breaker(input[*i]))
+					buffer[len++] = input[(*i)++];
+				buffer[len] = '\0';
+				add_token(tokens, ft_strdup(buffer), STRING, 1);
 			}
-			free(content);
 		}
-		(*i)++;
 	}
 }
 

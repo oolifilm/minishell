@@ -6,7 +6,7 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:57:49 by julien            #+#    #+#             */
-/*   Updated: 2025/04/10 18:00:30 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/14 20:05:02 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* Crée un nouveau token pour chaque élément
 (commande, argument, opérateur, etc.). */
 
-t_token	*new_token(char *input, t_token_type type)
+t_token	*new_token(char *input, t_token_type type, int quoted)
 {
 	t_token	*token;
 
@@ -23,23 +23,25 @@ t_token	*new_token(char *input, t_token_type type)
 	if (!token)
 		return (NULL);
 	token->input = ft_strdup(input);
-	if (token->input == NULL)
+	if (!token->input)
 	{
 		free(token);
 		return (NULL);
 	}
 	token->type = type;
+	token->quoted = quoted;
 	token->next = NULL;
 	return (token);
 }
 
 /* Ajoute un token à la liste chaînée. */
 
-t_token	*add_token(t_token_list *tokens, char *input, t_token_type type)
+t_token	*add_token(t_token_list *tokens, char *input, t_token_type type,
+		int quoted)
 {
 	t_token	*new;
 
-	new = new_token(input, type);
+	new = new_token(input, type, quoted);
 	if (!new)
 		return (NULL);
 	if (!tokens->head)

@@ -6,7 +6,7 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:02:26 by julien            #+#    #+#             */
-/*   Updated: 2025/04/10 17:39:55 by leaugust         ###   ########.fr       */
+/*   Updated: 2025/04/14 20:03:46 by leaugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ spécial dans l'analyse de la commande. */
 
 static bool	is_special_char(char c)
 {
-	return (c == ' ' || c == '\t' || c == '\n' || c == '|' || c == '$'
+	return (c == ' ' || c == '\t' || c == '\n' || c == '$'
 		|| c == '>' || c == '<' || c == '\'' || c == '\"');
 }
 
@@ -43,13 +43,13 @@ void	token_is_command(char *input, int *i, t_token_list *tokens,
 			*is_first_word = 1;
 		if (*is_first_word)
 		{
-			add_token(tokens, temp, CMD);
+			add_token(tokens, temp, CMD, 0);
 			*is_first_word = 0;
 		}
 		else if (temp[0] == '-')
-			add_token(tokens, temp, ARG);
+			add_token(tokens, temp, ARG, 0);
 		else
-			add_token(tokens, temp, STRING);
+			add_token(tokens, temp, STRING, 0);
 	}
 }
 
@@ -65,7 +65,7 @@ void	assign_env_var(char *input, int *i, t_token_list *tokens)
 	(*i)++;
 	if (input[*i] == '?')
 	{
-		add_token(tokens, "?", EXIT);
+		add_token(tokens, "?", EXIT, 0);
 		(*i)++;
 		return ;
 	}
@@ -76,5 +76,5 @@ void	assign_env_var(char *input, int *i, t_token_list *tokens)
 	}
 	var_name[j] = '\0';
 	if (j > 0)
-		add_token(tokens, var_name, ENV);
+		add_token(tokens, var_name, ENV, 0);
 }
