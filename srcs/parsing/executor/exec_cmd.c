@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:30:28 by julien            #+#    #+#             */
-/*   Updated: 2025/04/14 16:03:51 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:22:40 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,11 @@ void	exec_cmd(t_shell *sh, t_token *token, char *input)
 
 	if (token->type != CMD)
 		return ;
+	if (contains_pipe(token))
+	{
+		exec_pipe(sh, token, input);
+		return ;
+	}
 	expand_token_list(token);
 	if (is_builtin(token->input))
 	{

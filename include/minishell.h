@@ -6,7 +6,7 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
-/*   Updated: 2025/04/14 13:57:51 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:58:47 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_cmd
 	char			**args;
 	int				infile;
 	int				outfile;
+	t_token_list	*token_list;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -154,6 +155,8 @@ int					has_redirect(t_token *token);
 int					ft_free_split(char **tab);
 int					is_builtin(char *cmd);
 char				*get_path(char *cmd);
+int					exec_pipe(t_shell *sh, t_token *cmd, char *input);
+int					contains_pipe(t_token *token);
 
 /*******************************/
 /*==========BUILTINS==========*/

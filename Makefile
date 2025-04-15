@@ -6,7 +6,7 @@
 #    By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:08:51 by leaugust          #+#    #+#              #
-#    Updated: 2025/04/14 13:30:47 by jbanchon         ###   ########.fr        #
+#    Updated: 2025/04/15 16:58:25 by jbanchon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC			=	srcs/parsing/tokenizer/tokenizer.c \
 				srcs/parsing/executor/exec_cmd.c \
 				srcs/parsing/executor/exec_utils.c \
 				srcs/parsing/executor/exec_path.c \
+				srcs/parsing/executor/exec_pipe.c \
 				srcs/builtins/ft_cd.c \
 				srcs/builtins/ft_echo.c \
 				srcs/builtins/ft_env.c \

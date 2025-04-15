@@ -6,13 +6,13 @@
 /*   By: jbanchon <jbanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:22:45 by julien            #+#    #+#             */
-/*   Updated: 2025/04/10 12:43:00 by jbanchon         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:39:44 by jbanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-extern char	**g_env;
+extern char	**g_env; // Same ici, refaire export sans g_env
 
 static void	print_env_var_with_value(char *var, char *equal_sign)
 {
@@ -25,7 +25,7 @@ static void	print_env_var_with_value(char *var, char *equal_sign)
 		return ;
 	ft_strncpy(var_name, var, name_len);
 	var_name[name_len] = '\0';
-	write(1, "declare -x ", 11);
+	write(1, "export ", 11);
 	write(1, var_name, name_len);
 	write(1, "=\"", 2);
 	write(1, equal_sign + 1, ft_strlen(equal_sign + 1));
@@ -42,7 +42,7 @@ void	print_env_var(char *var)
 		print_env_var_with_value(var, equal_sign);
 	else
 	{
-		write(1, "declare -x ", 11);
+		write(1, "export", 11);
 		write(1, var, ft_strlen(var));
 		write(1, "\n", 1);
 	}
@@ -67,7 +67,7 @@ static char	**create_sorted_env(void)
 		i++;
 	}
 	sorted_env[env_count] = NULL;
-	qsort(sorted_env, env_count, sizeof(char *), compare_vars);
+	qsort(sorted_env, env_count, sizeof(char *), compare_vars); // A changer faire une sorte de bubble short ?
 	return (sorted_env);
 }
 
