@@ -6,7 +6,11 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 14:11:12 by leaugust          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/15 17:55:56 by leaugust         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/10 15:15:58 by leaugust         ###   ########.fr       */
+>>>>>>> b30a32c6081574bc4d76ee2c043b8e787bb79840
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +46,7 @@ typedef enum e_token_type
 	EXIT,
 	ENV,
 	STRING,
-	REDIR_FILE,
+	TARGET,
 }					t_token_type;
 
 typedef struct s_token

@@ -6,7 +6,11 @@
 /*   By: leaugust <leaugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:27:16 by leaugust          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/15 16:05:43 by leaugust         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/10 15:24:20 by leaugust         ###   ########.fr       */
+>>>>>>> b30a32c6081574bc4d76ee2c043b8e787bb79840
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +20,16 @@ int	is_invalid_first_token(t_token *head)
 {
 	if (!head)
 		return (printf("[ERROR] Token list is NULL.\n"), 1);
+<<<<<<< HEAD
 	if (head->type == PIPE)
 	{
 		printf("[ERROR] Pipe can't be the first argument.\n");
+=======
+	if (head->type == PIPE || head->type == REDIR_IN || head->type == REDIR_OUT
+		|| head->type == APPEND || head->type == HEREDOC)
+	{
+		printf("[ERROR] First word must be an argument.\n");
+>>>>>>> b30a32c6081574bc4d76ee2c043b8e787bb79840
 		return (1);
 	}
 	return (0);
@@ -69,6 +80,7 @@ int	has_invalid_redirection(t_token *tokens)
 		if (tokens->type == REDIR_IN || tokens->type == REDIR_OUT
 			|| tokens->type == APPEND || tokens->type == HEREDOC)
 		{
+<<<<<<< HEAD
 			if (!tokens->next)
 			{
 				printf("[ERROR] Redirection must be followed by a target.\n");
@@ -86,6 +98,13 @@ int	has_invalid_redirection(t_token *tokens)
 				&& tokens->next->type != ENV)
 			{
 				printf("[ERROR] Unexpected token after redirection.\n");
+=======
+			if (!tokens->next || (tokens->next->type != TARGET
+					&& tokens->next->type != STRING
+					&& tokens->next->type != ENV))
+			{
+				printf("[ERROR] Redirection must be followed by a target.\n");
+>>>>>>> b30a32c6081574bc4d76ee2c043b8e787bb79840
 				return (1);
 			}
 		}
@@ -119,7 +138,11 @@ int	has_unclosed_quote(char *input)
 int	parse_tokens(t_token_list *tokens)
 {
 	if (!tokens || !tokens->head)
+<<<<<<< HEAD
 		return (1);
+=======
+		return (printf("[ERROR] Token list is NULL.\n"), 0);
+>>>>>>> b30a32c6081574bc4d76ee2c043b8e787bb79840
 	if (is_invalid_first_token(tokens->head))
 		return (0);
 	if (handle_pipes(tokens->head))
